@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Remove o registro page1Visited do localStorage
     localStorage.removeItem('page1Visited');
+    localStorage.removeItem('processod');
 
     // Redireciona o usuário para a Página 2
     window.location.href = '../index.html';
