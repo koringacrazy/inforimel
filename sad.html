@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunicados Oficiais - IMEL</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">~
+<link rel="stylesheet" href="ccs.css">
+
+    <style>
+        :root {
+            --imel-primary: #0047AB;
+            --imel-secondary: #35FFF5;
+        }
+        
+        .comunicado-hero {
+            background: linear-gradient(135deg, rgba(0, 71, 171, 0.9) 0%, rgba(53, 255, 245, 0.8) 100%), url('https://via.placeholder.com/1920x600') center/cover;
+            padding: 100px 0;
+            color: white;
+            margin-top: 56px; /* compensar a navbar fixa */
+        }
+        
+        .comunicado-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 1.5rem;
+        }
+        
+        .comunicado-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        
+        .badge-urgente {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .badge-importante {
+            background: #ffc107;
+            color: black;
+        }
+        
+        .comunicado-date {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .filter-section {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+        
+        .attachment-box {
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .pagination .page-link {
+            border-radius: 10px !important;
+            margin: 0 5px;
+        }
+        
+        .comunicado-content {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .navbar {
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .comunicado-detail {
+            border-left: 4px solid var(--imel-primary);
+            padding-left: 1rem;
+        }
+        
+        /* Estilo para o editor/admin */
+        .admin-actions {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        
+        /* Modal de edição */
+        #editModal .modal-content {
+            border-radius: 15px;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .comunicado-hero {
+                padding: 60px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#"><strong>InforIMEL</strong></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item dropdown">
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<div class="comunicado-hero">
+    <div class="container text-center">
+        <h1 class="display-4 mb-3">Comunicados Oficiais</h1>
+        <p class="lead">Fique atualizado com as últimas informações institucionais</p>
+    </div>
+</div>
+
+<!-- Filtros e Busca -->
+<section class="container mt-5">
+    <div class="filter-section">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <select class="form-select" id="filterType">
+                    <option value="all">Todos os Tipos</option>
+                    <option value="urgente">Urgentes</option>
+                    <option value="importante">Importantes</option>
+                    <option value="geral">Geral</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <input type="text" class="form-control" id="searchInput" placeholder="Pesquisar comunicados...">
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary w-100" id="filterBtn">Filtrar</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Botão para adicionar novo comunicado (visível apenas para admin) -->
+<section class="container mb-4" id="adminSection" style="display: none;">
+    <button class="btn btn-imel" data-bs-toggle="modal" data-bs-target="#editModal" id="addNewBtn">
+        <i class="fas fa-plus"></i> Novo Comunicado
+    </button>
+</section>
+
+<!-- Lista de Comunicados -->
+<section class="container my-5" id="comunicadosList">
+    <!-- Os comunicados serão carregados aqui dinamicamente -->
+    <div class="text-center my-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Carregando...</span>
+        </div>
+        <p>Carregando comunicados...</p>
+    </div>
+</section>
+
+<!-- Paginação -->
+<nav class="container mb-5" id="paginationNav" style="display: none;">
+    <ul class="pagination justify-content-center">
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1">Anterior</a>
+        </li>
+        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#">Próximo</a>
+        </li>
+    </ul>
+</nav>
+
+<!-- Modal de Edição/Criação -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalTitle">Novo Comunicado</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="comunicadoForm">
+                    <input type="hidden" id="comunicadoId">
+                    <div class="mb-3">
+                        <label for="comunicadoTitulo" class="form-label">Título</label>
+                        <input type="text" class="form-control" id="comunicadoTitulo" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="comunicadoTipo" class="form-label">Tipo</label>
+                        <select class="form-select" id="comunicadoTipo" required>
+                            <option value="geral">Geral</option>
+                            <option value="importante">Importante</option>
+                            <option value="urgente">Urgente</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="comunicadoMensagem" class="form-label">Mensagem</label>
+                        <textarea class="form-control" id="comunicadoMensagem" rows="8" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Anexos</label>
+                        <div class="attachment-box text-center">
+                            <i class="fas fa-paperclip fa-2x mb-2"></i>
+                            <p>Arraste arquivos aqui ou clique para selecionar</p>
+                            <input type="file" class="d-none" id="fileInput" multiple>
+                            <button type="button" class="btn btn-outline-secondary" onclick="document.getElementById('fileInput').click()">
+                                Selecionar Arquivos
+                            </button>
+                        </div>
+                        <div id="fileList" class="mt-2"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="saveComunicadoBtn">Salvar Comunicado</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Confirmação de Exclusão -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmar Exclusão</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Tem certeza que deseja excluir este comunicado? Esta ação não pode ser desfeita.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Visualização -->
+<div class="modal fade" id="viewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewModalTitle">Título do Comunicado</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-between mb-3">
+                    <span class="badge rounded-pill" id="viewModalBadge">Geral</span>
+                    <span class="text-muted" id="viewModalDate">20 de Março de 2024</span>
+                </div>
+                <div class="comunicado-content" id="viewModalContent">
+                    Conteúdo do comunicado será exibido aqui...
+                </div>
+                <div class="mt-4" id="viewModalAttachments">
+                    <h6>Anexos:</h6>
+                    <div class="list-group" id="attachmentsList">
+                        <!-- Anexos serão exibidos aqui -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Modal Login -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h3 class="modal-title text-primary" id="loginModalLabel">Acesso à Plataforma</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="loginprocesso" class="form-label">Nº de Processo</label>
+                            <input type="number" class="form-control" id="loginprocesso" required 
+                                placeholder="Nº de Processo">
+                        </div>
+                        <div class="mb-4">
+                            <label for="loginPassword" class="form-label">Palavra-passe</label>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="loginPassword" required>
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2">Entrar</button>
+                    </form>
+                    
+        
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module">
+    // Importações do Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { 
+        getFirestore, 
+        collection, 
+        addDoc, 
+        getDocs, 
+        doc, 
+        deleteDoc, 
+        updateDoc,
+        query,
+        where,
+        orderBy,
+        serverTimestamp 
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    // Configuração do Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyD6_K4aHxzYtcYPjeudsSQW_kQKNF4TH-c",
+        authDomain: "inforimel-679f3.firebaseapp.com",
+        projectId: "inforimel-679f3",
+        storageBucket: "inforimel-679f3.appspot.com",
+        messagingSenderId: "729241397682",
+        appId: "1:729241397682:web:961681efd9e702c1045cab"
+    };
+
+    // Inicializar Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+    const comunicadosRef = collection(db, "comunicados");
+    
+    // Função de login
+  document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const processo = document.getElementById('loginprocesso').value.trim();
+    const senha = document.getElementById('loginPassword').value.trim();
+
+    try {
+      const alunosRef = collection(db, 'alunos');
+      const q = query(alunosRef, where('processo', '==', processo), where('senha', '==', senha));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        // Login correto
+        localStorage.setItem('processo', processo);
+        alert('Login bem-sucedido!');
+        // Redirecionar ou fechar modal
+        location.href = "house/house.html"; // exemplo
+      } else {
+        alert('Nº de processo ou senha inválidos.');
+      }
+    } catch (error) {
+  console.error("Erro ao fazer login:", error); // <-- já está aqui
+  alert('Erro no login. Tente novamente.\n' + error.message); // <-- adicione isso
+}
+
+  });
+
+  document.getElementById("togglePassword").addEventListener("click", function () {
+    const passwordInput = document.getElementById("loginPassword");
+    const icon = this.querySelector("i");
+    const isPassword = passwordInput.type === "password";
+    passwordInput.type = isPassword ? "text" : "password";
+    icon.classList.toggle("fa-eye");
+    icon.classList.toggle("fa-eye-slash");
+});
+    // Variáveis globais
+    let currentUser = null;
+    let comunicados = [];
+    let currentComunicadoId = null;
+    
+    // Elementos do DOM
+    const comunicadosList = document.getElementById('comunicadosList');
+    const adminSection = document.getElementById('adminSection');
+    const addNewBtn = document.getElementById('addNewBtn');
+    const filterBtn = document.getElementById('filterBtn');
+    const filterType = document.getElementById('filterType');
+    const searchInput = document.getElementById('searchInput');
+    
+    // Modal elements
+    const editModal = new bootstrap.Modal(document.getElementById('editModal'));
+    const viewModal = new bootstrap.Modal(document.getElementById('viewModal'));
+    const confirmDeleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+    const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+    
+    // Form elements
+    const comunicadoForm = document.getElementById('comunicadoForm');
+    const comunicadoId = document.getElementById('comunicadoId');
+    const comunicadoTitulo = document.getElementById('comunicadoTitulo');
+    const comunicadoTipo = document.getElementById('comunicadoTipo');
+    const comunicadoMensagem = document.getElementById('comunicadoMensagem');
+    const saveComunicadoBtn = document.getElementById('saveComunicadoBtn');
+    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+    
+    // Login elements
+    const loginBtn = document.getElementById('loginBtn');
+    const loginEmail = document.getElementById('loginEmail');
+    const loginPassword = document.getElementById('loginPassword');
+    
+    // Função para formatar data
+    function formatDate(date) {
+        const options = { 
+            day: '2-digit', 
+            month: '2-digit', 
+            year: 'numeric', 
+            hour: '2-digit', 
+            minute: '2-digit' 
+        };
+        return date.toLocaleDateString('pt-PT', options);
+    }
+    
+    // Função para mostrar toast
+    function showToast(message, type = 'success') {
+        const toastContainer = document.createElement('div');
+        toastContainer.innerHTML = `
+            <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+                <div class="toast show align-items-center text-white bg-${type} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            ${message}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(toastContainer);
+        
+        setTimeout(() => {
+            toastContainer.remove();
+        }, 3000);
+    }
+    
+    // Função para carregar comunicados
+    async function loadComunicados() {
+        try {
+            comunicadosList.innerHTML = `
+                <div class="text-center my-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Carregando...</span>
+                    </div>
+                    <p>Carregando comunicados...</p>
+                </div>
+            `;
+            
+            // Criar query com ordenação por data (mais recente primeiro)
+            const q = query(comunicadosRef, orderBy("data", "desc"));
+            const querySnapshot = await getDocs(q);
+            
+            comunicados = [];
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                comunicados.push({
+                    id: doc.id,
+                    titulo: data.titulo,
+                    mensagem: data.mensagem,
+                    tipo: data.tipo || 'geral',
+                    data: data.data.toDate(),
+                    autor: data.autor || 'Administração'
+                });
+            });
+            
+            renderComunicados();
+        } catch (error) {
+            console.error("Erro ao carregar comunicados: ", error);
+            showToast('Erro ao carregar comunicados', 'danger');
+        }
+    }
+    
+    // Função para renderizar comunicados
+    function renderComunicados(filteredComunicados = null) {
+        const comunicadosToRender = filteredComunicados || comunicados;
+        
+        if (comunicadosToRender.length === 0) {
+            comunicadosList.innerHTML = `
+                <div class="alert alert-info text-center">
+                    Nenhum comunicado encontrado. Tente ajustar seus filtros de busca.
+                </div>
+            `;
+            return;
+        }
+        
+        comunicadosList.innerHTML = '';
+        
+        comunicadosToRender.forEach(comunicado => {
+            const badgeClass = comunicado.tipo === 'urgente' ? 'badge-urgente' : 
+                             comunicado.tipo === 'importante' ? 'badge-importante' : 'bg-secondary';
+            
+            const comunicadoElement = document.createElement('div');
+            comunicadoElement.className = 'card comunicado-card';
+            comunicadoElement.innerHTML = `
+                <div class="card-body position-relative">
+                    ${currentUser ? `
+                    <div class="admin-actions">
+                        <button class="btn btn-sm btn-outline-primary me-1 edit-comunicado" data-id="${comunicado.id}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger delete-comunicado" data-id="${comunicado.id}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    ` : ''}
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <span class="badge rounded-pill ${badgeClass}">${comunicado.tipo.charAt(0).toUpperCase() + comunicado.tipo.slice(1)}</span>
+                        <small class="comunicado-date">${formatDate(comunicado.data)}</small>
+                    </div>
+                    <h5 class="card-title">${comunicado.titulo}</h5>
+                    <p class="card-text">${comunicado.mensagem.length > 150 ? comunicado.mensagem.substring(0, 150) + '...' : comunicado.mensagem}</p>
+                    <button class="btn btn-outline-primary view-comunicado" data-id="${comunicado.id}">
+                        <i class="fas fa-eye me-1"></i> Ver Detalhes
+                    </button>
+                </div>
+            `;
+            
+            comunicadosList.appendChild(comunicadoElement);
+        });
+        
+        // Adicionar eventos aos botões
+        document.querySelectorAll('.view-comunicado').forEach(btn => {
+            btn.addEventListener('click', () => viewComunicado(btn.dataset.id));
+        });
+        
+        if (currentUser) {
+            document.querySelectorAll('.edit-comunicado').forEach(btn => {
+                btn.addEventListener('click', () => editComunicado(btn.dataset.id));
+            });
+            
+            document.querySelectorAll('.delete-comunicado').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentComunicadoId = btn.dataset.id;
+                    confirmDeleteModal.show();
+                });
+            });
+        }
+    }
+    
+    // Função para visualizar comunicado
+    function viewComunicado(id) {
+        const comunicado = comunicados.find(c => c.id === id);
+        if (!comunicado) return;
+        
+        const badgeClass = comunicado.tipo === 'urgente' ? 'badge-urgente' : 
+                         comunicado.tipo === 'importante' ? 'badge-importante' : 'bg-secondary';
+        
+        document.getElementById('viewModalTitle').textContent = comunicado.titulo;
+        document.getElementById('viewModalBadge').textContent = comunicado.tipo.charAt(0).toUpperCase() + comunicado.tipo.slice(1);
+        document.getElementById('viewModalBadge').className = `badge rounded-pill ${badgeClass}`;
+        document.getElementById('viewModalDate').textContent = formatDate(comunicado.data);
+        document.getElementById('viewModalContent').innerHTML = comunicado.mensagem.replace(/\n/g, '<br>');
+        
+        // Limpar anexos anteriores
+        const attachmentsList = document.getElementById('attachmentsList');
+        attachmentsList.innerHTML = '';
+        
+        // Mostrar seção de anexos apenas se houver anexos
+        document.getElementById('viewModalAttachments').style.display = 'none';
+        
+        viewModal.show();
+    }
+    
+    // Função para editar comunicado
+    function editComunicado(id) {
+        const comunicado = comunicados.find(c => c.id === id);
+        if (!comunicado) return;
+        
+        currentComunicadoId = id;
+        document.getElementById('editModalTitle').textContent = 'Editar Comunicado';
+        comunicadoId.value = id;
+        comunicadoTitulo.value = comunicado.titulo;
+        comunicadoTipo.value = comunicado.tipo;
+        comunicadoMensagem.value = comunicado.mensagem;
+        
+        // Limpar lista de arquivos
+        document.getElementById('fileList').innerHTML = '';
+        
+        editModal.show();
+    }
+    
+    // Função para salvar comunicado (criar ou atualizar)
+    async function saveComunicado() {
+        if (!comunicadoForm.checkValidity()) {
+            comunicadoForm.reportValidity();
+            return;
+        }
+        
+        try {
+            const comunicadoData = {
+                titulo: comunicadoTitulo.value,
+                mensagem: comunicadoMensagem.value,
+                tipo: comunicadoTipo.value,
+                data: serverTimestamp(),
+                autor: currentUser.email
+            };
+            
+            if (currentComunicadoId) {
+                // Atualizar comunicado existente
+                await updateDoc(doc(db, "comunicados", currentComunicadoId), comunicadoData);
+                showToast('Comunicado atualizado com sucesso!');
+            } else {
+                // Criar novo comunicado
+                await addDoc(comunicadosRef, comunicadoData);
+                showToast('Comunicado publicado com sucesso!');
+            }
+            
+            // Limpar formulário e fechar modal
+            comunicadoForm.reset();
+            editModal.hide();
+            currentComunicadoId = null;
+            
+            // Recarregar lista de comunicados
+            loadComunicados();
+        } catch (error) {
+            console.error("Erro ao salvar comunicado: ", error);
+            showToast('Erro ao salvar comunicado', 'danger');
+        }
+    }
+    
+    // Função para excluir comunicado
+    async function deleteComunicado() {
+        try {
+            await deleteDoc(doc(db, "comunicados", currentComunicadoId));
+            showToast('Comunicado excluído com sucesso!');
+            confirmDeleteModal.hide();
+            loadComunicados();
+        } catch (error) {
+            console.error("Erro ao excluir comunicado: ", error);
+            showToast('Erro ao excluir comunicado', 'danger');
+        }
+    }
+    
+    // Função para filtrar comunicados
+    function filterComunicados() {
+        const typeFilter = filterType.value;
+        const searchTerm = searchInput.value.toLowerCase();
+        
+        let filtered = comunicados;
+        
+        // Aplicar filtro de tipo
+        if (typeFilter !== 'all') {
+            filtered = filtered.filter(c => c.tipo === typeFilter);
+        }
+        
+        // Aplicar filtro de busca
+        if (searchTerm) {
+            filtered = filtered.filter(c => 
+                c.titulo.toLowerCase().includes(searchTerm) || 
+                c.mensagem.toLowerCase().includes(searchTerm)
+            );
+        }
+        
+        renderComunicados(filtered);
+    }
+    
+    // Função para fazer login
+    async function login() {
+        try {
+            const userCredential = await signInWithEmailAndPassword(
+                auth, 
+                loginEmail.value, 
+                loginPassword.value
+            );
+            
+            currentUser = userCredential.user;
+            adminSection.style.display = 'block';
+            loginModal.hide();
+            showToast('Login realizado com sucesso!');
+            loadComunicados();
+        } catch (error) {
+            console.error("Erro ao fazer login: ", error);
+            showToast('Erro ao fazer login. Verifique suas credenciais.', 'danger');
+        }
+    }
+    
+    // Função para fazer logout
+    async function logout() {
+        try {
+            await signOut(auth);
+            currentUser = null;
+            adminSection.style.display = 'none';
+            showToast('Logout realizado com sucesso!');
+            loadComunicados();
+        } catch (error) {
+            console.error("Erro ao fazer logout: ", error);
+            showToast('Erro ao fazer logout', 'danger');
+        }
+    }
+    
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+        // Verificar se há usuário logado
+        auth.onAuthStateChanged(user => {
+            currentUser = user;
+            if (user) {
+                adminSection.style.display = 'block';
+            } else {
+                adminSection.style.display = 'none';
+            }
+            
+            // Carregar comunicados
+            loadComunicados();
+        });
+    });
+    
+    // Botão de adicionar novo comunicado
+    addNewBtn.addEventListener('click', () => {
+        document.getElementById('editModalTitle').textContent = 'Novo Comunicado';
+        comunicadoForm.reset();
+        currentComunicadoId = null;
+        document.getElementById('fileList').innerHTML = '';
+    });
+    
+    // Botão de salvar comunicado
+    saveComunicadoBtn.addEventListener('click', saveComunicado);
+    
+    // Botão de confirmar exclusão
+    confirmDeleteBtn.addEventListener('click', deleteComunicado);
+    
+    // Botão de filtrar
+    filterBtn.addEventListener('click', filterComunicados);
+    
+    // Filtro por tipo
+    filterType.addEventListener('change', filterComunicados);
+    
+    // Busca em tempo real
+    searchInput.addEventListener('input', filterComunicados);
+    
+    // Botão de login
+    loginBtn.addEventListener('click', login);
+    
+    // Permitir submit do formulário de login com Enter
+    document.getElementById('loginForm').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            login();
+        }
+    });
+    
+    // Botão de logout (adicionado dinamicamente)
+    document.body.addEventListener('click', (e) => {
+        if (e.target.id === 'logoutBtn') {
+            logout();
+        }
+    });
+</script>
+<script src="login.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

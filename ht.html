@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Inserir Alunos no Firestore</title>
+  <!-- Importação do Firebase -->
+  <script type="module">
+    // Importações dos módulos do Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js";
+    import { getFirestore, writeBatch, doc, collection } from "https://www.gstatic.com/firebasejs/9.0.2/firebase-firestore.js";
+
+    // Configuração do Firebase (substitua pelos seus dados)
+// Configuração do Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyD6_K4aHxzYtcYPjeudsSQW_kQKNF4TH-c",
+    authDomain: "inforimel-679f3.firebaseapp.com",
+    projectId: "inforimel-679f3",
+    storageBucket: "inforimel-679f3.appspot.com",
+    messagingSenderId: "729241397682",
+    appId: "1:729241397682:web:961681efd9e702c1045cab"
+};
+
+
+    // Inicialização do Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Arrays com os nomes e processos
+    const nomes = [
+      "ADELINA NEVES UKAKA",
+      "AFONSO TUSEVO MANUEL",
+      "ANICETH ROMÃO BENTO",
+      "ARSÉNIO FREDERICO CHISSALUQUILA",
+      "BRÁULIO SETULA BRAVO",
+      "CLEMENTE NSUKANI",
+      "DANIEL GOMES OCTÁVIO",
+      "EDVALDO OXIMAR DA COSTA FRANCISCO",
+      "ELIZANDRA NETO JULANTE",
+      "ESTANISLAU CHOCOLATE LUEMBA",
+      "FILIPE MUSSUNGO JUNGO",
+      "FREDERICO DEODATO EPALANGA SACAME",
+      "IDALÉCIO CORREIA QUINTAS",
+      "ISMAEL ESTEVÃO NGOLMA",
+      "IVO IMBI PACAVIRA",
+      "JULIÃO JAIME VUNDA",
+      "JURELMA BUNGA GARCIA",
+      "KÉRSIA FABIANA GUIMARÃES DE ALMEIDA",
+      "KLEBERSON ALMEIDA DA COSTA",
+      "LOSSI LUÍSA MBALA GARCIA",
+      "MARCELA VUNGE NGOLA",
+      "MÁRCIO MANUEL GOMES",
+      "MARIANA MARTINHO FELICIANO",
+      "MÁRIO FRAGOSO PIMENTEL",
+      "MAURO FERREIRA AGOSTINHO",
+      "MIGUEL MATIAS SIMÕES CABALO",
+      "NIRIEL KUDIZEMBA MENO",
+      "OLIVIA MANUEL ROCHA",
+      "OSVALDO ANDERSON DE OLIVEIRA DAMB",
+      "PAULO L BERNABE CACHINBOMBO",
+      "SAMARA TRANCO GONGA",
+      "SANDRA ALBERTO GASPAR",
+      "TELMO DOMINGOS CHICA",
+      "TERESA MAMBOTE MUUKENDI NDOMBASI",
+      "VALERIA JOAQUIM BANDUA",
+      "ZEFERINA TEIXERA ANTÓNIO"
+    ];
+
+    const processos = [
+      "3930",
+      "39304",
+      "39305",
+      "39306",
+      "39309",
+      "39312",
+      "39314",
+      "39318",
+      "39320",
+      "39321",
+      "39322",
+      "39323",
+      "40936",
+      "39328",
+      "36083",
+      "39330",
+      "39331",
+      "39006",
+      "39335",
+      "39338",
+      "39339",
+      "39340",
+      "39341",
+      "39342",
+      "39343",
+      "39344",
+      "39345",
+      "39346",
+      "39347",
+      "39348",
+      "34453",
+      "39298",
+      "39350",
+      "36144",
+      "39352"
+    ];
+
+    // Função para adicionar os dados
+    async function adicionarAlunos() {
+      const batch = writeBatch(db);
+
+      for (let i = 0; i < nomes.length; i++) {
+        const alunoRef = doc(collection(db, "alunos"));
+        batch.set(alunoRef, {
+          nome: nomes[i],
+          processo: processos[i] || null,
+          classe: "13ª",
+          curso: "InforGest",
+          senha: "123456",
+          turma: "BT",
+          turno: "Tarde"
+        });
+      }
+
+      try {
+        await batch.commit();
+        console.log("Todos os dados foram adicionados com sucesso!");
+      } catch (error) {
+        console.error("Erro ao adicionar os dados: ", error);
+      }
+    }
+
+    // Chamada da função ao carregar a página
+    window.addEventListener('load', adicionarAlunos);
+  </script>
+</head>
+<body>
+  <h1>Inserindo Alunos no Firestore...</h1>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Login</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+    <style>
+        body {
+            background-color: #0a0f1e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .container {
+            background: rgba(10, 15, 30, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #00f2ff;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #00f2ff;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #ff0000;
+        }
+
+        h2 {
+            color: #00f2ff;
+            text-shadow: 0 0 10px #00f2ff;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background: #0a1c3b;
+            color: white;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        button.aa {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #00f2ff;
+            color: #0a0f1e;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1rem;
+        }
+
+        button.aa:hover {
+            background: #0088aa;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 15px;
+            }
+            input, button {
+                font-size: 0.9rem;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="close-btn" onclick="fecharPagina();">&times;</button>
+
+    <div class="container">
+        <h2>Login</h2>
+        <input type="text" id="processo" placeholder="Número de Processo" pattern="\d*" oninput="this.value = this.value.replace(/\D/g, '')">
+        <input type="password" id="senha" placeholder="Senha">
+        <button onclick="validarLogin()" class="aa">Entrar</button>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD6_K4aHxzYtcYPjeudsSQW_kQKNF4TH-c",
+            authDomain: "inforimel-679f3.firebaseapp.com",
+            projectId: "inforimel-679f3",
+            storageBucket: "inforimel-679f3.appspot.com",
+            messagingSenderId: "729241397682",
+            appId: "1:729241397682:web:961681efd9e702c1045cab"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function validarLogin() {
+            var processo = document.getElementById("processo").value.trim();
+            var senha = document.getElementById("senha").value.trim();
+
+            if (processo === "" || senha === "") {
+                alert("Por favor, preencha todos os campos!");
+                return;
+            }
+
+            try {
+                const usuariosRef = collection(db, "alunos");
+                const q = query(usuariosRef, where("processo", "==", processo));
+                const querySnapshot = await getDocs(q);
+
+                if (querySnapshot.empty) {
+                    alert("Número de processo não encontrado!");
+                    return;
+                }
+
+                let usuarioValido = false;
+                let usuarioData = null;
+
+                querySnapshot.forEach((doc) => {
+                    const dados = doc.data();
+                    if (dados.senha === senha) {
+                        usuarioValido = true;
+                        usuarioData = dados;
+                    }
+                });
+
+                if (usuarioValido) {
+                    localStorage.setItem("nome", usuarioData.nome);
+                    localStorage.setItem("processo", usuarioData.processo);
+                    localStorage.setItem("curso", usuarioData.curso);
+
+                    localStorage.setItem('processod', 'true');
+
+                    window.location.href = "principal/index.html";
+                } else {
+                    alert("Número de processo não encontrado!");
+                }
+
+            } catch (error) {
+                console.error("Erro ao buscar usuário:", error);
+                alert("Erro ao conectar com o banco de dados!");
+            }
+        }
+
+        window.validarLogin = validarLogin;
+    </script>
+
+    <script>
+        function fecharPagina() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
