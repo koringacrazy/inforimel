@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Horários e Calendário por Curso, Turma e Sala</title>
+  <!-- Link para o Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    /* Estilos para o corpo e tabelas do calendário */
+    body { margin: 20px; }
+    .calendar-table td { height: 50px; vertical-align: middle; cursor: pointer; }
+    .event-day { background-color: #d3f4d3; }
+    .calendar-nav button { padding: 5px 15px; }
+    .event-info { background-color: #ffef92; padding: 10px; border: 1px solid #ccc; margin-top: 10px; display: none; }
+    .event-info.active { display: block; }
+  </style>
+</head>
+<body class="container">
+
+  <!-- Título principal -->
+  <h1 class="text-center my-4">Horários e Calendário por Curso, Turma e Sala</h1>
+
+  <!-- Seção de Filtros para curso, turma e sala -->
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <label for="cursoSelect" class="form-label">Selecione o curso:</label>
+      <select id="cursoSelect" class="form-select">
+        <option value="">-- Escolha --</option>
+        <!-- Cursos disponíveis -->
+        <option value="cursomatematica">Informática de Gestão</option>
+        <option value="cursoportugues">Gestão Empresarial</option>
+        <option value="cursomatematica">Finanças</option>
+        <option value="cursoportugues">Transporte</option>
+        <option value="cursomatematica">Contabilidade</option>
+        <option value="cursoportugues">Contabilidade e Gestão</option>
+        <option value="cursomatematica">Comunicação Social</option>
+        <option value="cursoportugues">Administração Pública</option>
+        <option value="cursomatematica">Comercio</option>
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label for="turmaSelect" class="form-label">Selecione a turma:</label>
+      <select id="turmaSelect" class="form-select">
+        <option value="">-- Escolha --</option>
+        <option value="turmaA">Turma A</option>
+        <option value="turmaB">Turma B</option>
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label for="salaSelect" class="form-label">Selecione a sala:</label>
+      <select id="salaSelect" class="form-select">
+        <option value="">-- Escolha --</option>
+        <option value="sala1">Sala 1</option>
+        <option value="sala2">Sala 2</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Abas para conteúdo de Horário e Calendário -->
+  <ul class="nav nav-tabs my-4" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active" id="horario-tab" data-bs-toggle="tab" href="#horario" role="tab" aria-controls="horario" aria-selected="true">Horário</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="calendario-tab" data-bs-toggle="tab" href="#calendario" role="tab" aria-controls="calendario" aria-selected="false">Calendário</a>
+    </li>
+  </ul>
+
+  <div class="tab-content" id="myTabContent">
+    <!-- Aba de Horário -->
+    <div class="tab-pane fade show active" id="horario" role="tabpanel" aria-labelledby="horario-tab">
+      <div id="horarioContent" class="my-4"></div>
+    </div>
+
+    <!-- Aba de Calendário -->
+    <div class="tab-pane fade" id="calendario" role="tabpanel" aria-labelledby="calendario-tab">
+      <div id="calendarioContent" class="calendar">
+        <!-- Navegação do calendário -->
+        <div class="calendar-nav d-flex justify-content-center my-4">
+          <button id="prevMonth" class="btn btn-primary me-2">◀</button>
+          <span id="monthYear" class="fs-4 fw-bold"></span>
+          <button id="nextMonth" class="btn btn-primary ms-2">▶</button>
+        </div>
+        <div id="calendarioConteudo" class="table-responsive"></div>
+        <div id="eventInfo" class="event-info"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script do Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Dados simulados de horários e eventos
+    const horarios = {
+      cursomatematica: { 
+        turmaA: { sala1: [["Segunda", "Matemática", "Física", "Química"], ["Terça", "Álgebra", "Geometria", "Trigonometria"]] },
+        turmaB: { sala2: [["Segunda", "Álgebra", "Física", "Cálculo"], ["Quarta", "Geometria", "Probabilidade", "Estatística"]] },
+      },
+      cursoportugues: {
+        turmaA: { sala1: [["Segunda", "Literatura", "Gramática", "Redação"], ["Quarta", "Língua Portuguesa", "Interpretação", "Análise Textual"]] },
+        turmaB: { sala2: [["Terça", "Literatura Brasileira", "Lingüística", "Análise de Texto"], ["Sexta", "Gramática", "Redação", "Interpretação"]] },
+      },
+    };
+
+    const eventosCalendario = {
+      cursomatematica: {
+        turmaA: {
+          sala1: {
+            "2025-04-15": "Prova de Matemática",
+            "2025-04-20": "Aula Extra de Cálculo"
+          },
+        },
+        turmaB: {
+          sala2: {
+            "2025-04-17": "Aula de Física Experimental",
+            "2025-04-22": "Avaliação de Geometria"
+          },
+        },
+      },
+      cursoportugues: {
+        turmaA: {
+          sala1: {
+            "2025-04-15": "Prova de Literatura",
+            "2025-04-18": "Aula de Redação"
+          },
+        },
+        turmaB: {
+          sala2: {
+            "2025-04-17": "Apresentação de Projeto de Redação",
+            "2025-04-22": "Exercícios de Gramática"
+          },
+        },
+      },
+    };
+
+    // Seletores de elementos
+    const cursoSelect = document.getElementById("cursoSelect");
+    const turmaSelect = document.getElementById("turmaSelect");
+    const salaSelect = document.getElementById("salaSelect");
+    const horarioDiv = document.getElementById("horarioContent");
+    const calendarioDiv = document.getElementById("calendarioConteudo");
+    const eventInfoDiv = document.getElementById("eventInfo");
+    const monthYearDiv = document.getElementById("monthYear");
+
+    let currentMonth = new Date().getMonth();
+    let currentYear = new Date().getFullYear();
+
+    // Atualiza visualização ao mudar os filtros
+    cursoSelect.addEventListener("change", atualizarVisualizacao);
+    turmaSelect.addEventListener("change", atualizarVisualizacao);
+    salaSelect.addEventListener("change", atualizarVisualizacao);
+
+    // Função para atualizar a exibição com base nos filtros
+    function atualizarVisualizacao() {
+      const curso = cursoSelect.value;
+      const turma = turmaSelect.value;
+      const sala = salaSelect.value;
+
+      if (curso && turma && sala) {
+        mostrarHorario(curso, turma, sala);
+        mostrarCalendario(curso, turma, sala);
+      }
+    }
+
+    // Exibe o horário para o curso, turma e sala selecionados
+    function mostrarHorario(curso, turma, sala) {
+      if (!curso || !turma || !sala) {
+        horarioDiv.innerHTML = "";
+        return;
+      }
+
+      const horario = horarios[curso]?.[turma]?.[sala];
+      if (!horario) {
+        horarioDiv.innerHTML = "Horário não disponível.";
+        return;
+      }
+
+      const tabela = horario.map(linha =>
+        `<tr>${linha.map(col => `<td class="text-center">${col}</td>`).join("")}</tr>`
+      ).join("");
+
+      horarioDiv.innerHTML = `
+        <h2 class="text-center">Horário ${turma} - Sala ${sala}</h2>
+        <table class="table table-bordered text-center">
+          <thead>
+            <tr>
+              <th>Dia</th>
+              <th>1ª Aula</th>
+              <th>2ª Aula</th>
+              <th>3ª Aula</th>
+            </tr>
+          </thead>
+          <tbody>${tabela}</tbody>
+        </table>
+      `;
+    }
+
+    // Exibe o calendário com eventos
+    function mostrarCalendario(curso, turma, sala) {
+      if (!curso || !turma || !sala) {
+        calendarioDiv.innerHTML = "";
+        return;
+      }
+
+      const eventos = eventosCalendario[curso]?.[turma]?.[sala] || {};
+      const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
+      const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0);
+      const totalDaysInMonth = lastDayOfMonth.getDate();
+      const firstDayWeekDay = firstDayOfMonth.getDay();
+      
+      let days = "<tr>";
+      for (let i = 1; i <= totalDaysInMonth; i++) {
+        const currentDay = new Date(currentYear, currentMonth, i);
+        const dateString = currentDay.toISOString().split('T')[0];
+        const evento = eventos[dateString];
+        const dayClass = evento ? 'event-day' : '';
+
+        days += `<td class="${dayClass}" data-date="${dateString}">${i}${evento ? ` <br><strong>${evento}</strong>` : ''}</td>`;
+
+        if ((i + firstDayWeekDay) % 7 === 0) {
+          days += "</tr><tr>";
+        }
+      }
+      days += "</tr>";
+
+      const calendarGrid = `<table class="table table-bordered calendar-table">
+        <thead>
+          <tr>
+            <th>Dom</th>
+            <th>Seg</th>
+            <th>Ter</th>
+            <th>Qua</th>
+            <th>Qui</th>
+            <th>Sex</th>
+            <th>Sáb</th>
+          </tr>
+        </thead>
+        <tbody>${days}</tbody>
+      </table>`;
+
+      monthYearDiv.innerHTML = `${getMonthName(currentMonth)} ${currentYear}`;
+      calendarioDiv.innerHTML = calendarGrid;
+
+      // Interação para mostrar detalhes do evento
+      const eventDays = document.querySelectorAll(".event-day");
+      eventDays.forEach(day => {
+        day.addEventListener("click", () => {
+          const date = day.getAttribute("data-date");
+          const eventDetail = eventos[date];
+          eventInfoDiv.classList.add("active");
+          eventInfoDiv.innerHTML = `<h3>Evento: ${eventDetail}</h3><p>Data: ${date}</p>`;
+        });
+      });
+    }
+
+    // Função para obter o nome do mês
+    function getMonthName(monthIndex) {
+      const months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+      return months[monthIndex];
+    }
+  </script>
+
+</body>
+</html>

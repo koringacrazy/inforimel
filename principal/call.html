@@ -1,0 +1,800 @@
+<!doctype html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="IMEL">
+  <link rel="shortcut icon" href="favicon.png">
+
+  <meta name="description" content="Calendário e Horários do IMEL" />
+  <meta name="keywords" content="imel, calendário, horários, escola" />
+
+  <!-- Fontes -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Ícones -->
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/animate.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <title>INFORIMEL | Calendário & Horários</title>
+  
+  <style>
+    :root {
+      --cor-primaria: #0047AB;
+      --cor-secundaria: #FF6B35;
+      --cor-destaque: #00C49A;
+      --cor-texto: #2d3748;
+      --cor-texto-claro: #718096;
+      --cor-borda: #e2e8f0;
+      --cor-fundo: #f8fafc;
+      --sombra-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --sombra-card-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--cor-fundo);
+      color: var(--cor-texto);
+    }
+
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+    }
+
+    /* Header */
+    .site-hero {
+      background: linear-gradient(rgba(0, 71, 171, 0.8), rgba(0, 40, 85, 0.9)), url('images/call.png');
+      background-size: cover;
+      background-position: center;
+      padding: 5rem 0;
+      color: white;
+      text-align: center;
+    }
+
+    .site-hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    /* Navegação */
+    .navbar {
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .navbar-brand {
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
+
+    .navbar-brand span {
+      color: var(--cor-primaria);
+    }
+
+    .nav-link {
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+    }
+
+    .dropdown-menu {
+      border: none;
+      box-shadow: var(--sombra-card-hover);
+    }
+
+    /* Filtros */
+    .filter-section {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: var(--sombra-card);
+      margin-bottom: 2rem;
+    }
+
+    .form-label {
+      font-weight: 500;
+      color: var(--cor-primaria);
+    }
+
+    .form-select {
+      border: 1px solid var(--cor-borda);
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+    }
+
+    /* Abas */
+    .nav-tabs {
+      border-bottom: 2px solid var(--cor-borda);
+    }
+
+    .nav-tabs .nav-link {
+      border: none;
+      color: var(--cor-texto-claro);
+      font-weight: 500;
+      padding: 0.75rem 1.5rem;
+    }
+
+    .nav-tabs .nav-link.active {
+      color: var(--cor-primaria);
+      border-bottom: 3px solid var(--cor-primaria);
+      background: transparent;
+    }
+
+    /* Tabela de Horários */
+    .schedule-table {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--sombra-card);
+    }
+
+    .schedule-table thead th {
+      background: var(--cor-primaria);
+      color: white;
+      padding: 1rem;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .schedule-table tbody td {
+      padding: 1rem;
+      vertical-align: middle;
+    }
+
+    .schedule-table tbody tr:nth-child(even) {
+      background-color: rgba(0, 71, 171, 0.03);
+    }
+
+    /* Calendário */
+    .calendar-container {
+      background: white;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: var(--sombra-card);
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .calendar-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--cor-primaria);
+    }
+
+    .calendar-nav button {
+      background: var(--cor-primaria);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1rem;
+      transition: all 0.2s;
+    }
+
+    .calendar-nav button:hover {
+      background: var(--cor-secundaria);
+    }
+
+    .calendar-grid {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 5px;
+    }
+
+    .calendar-grid th {
+      text-align: center;
+      padding: 0.75rem;
+      color: var(--cor-texto-claro);
+      font-weight: 500;
+    }
+
+    .calendar-grid td {
+      height: 60px;
+      width: 14.28%;
+      text-align: center;
+      vertical-align: middle;
+      background: white;
+      border-radius: 8px;
+      transition: all 0.2s;
+      position: relative;
+      cursor: pointer;
+      border: 1px solid var(--cor-borda);
+    }
+
+    .calendar-grid td:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .event-day {
+      background-color: rgba(0, 196, 154, 0.1);
+      border: 1px solid var(--cor-destaque);
+    }
+
+    .event-day::after {
+      content: '';
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 6px;
+      height: 6px;
+      background: var(--cor-destaque);
+      border-radius: 50%;
+    }
+
+    .event-info {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      box-shadow: var(--sombra-card);
+      border-left: 4px solid var(--cor-primaria);
+    }
+
+    .event-info h3 {
+      color: var(--cor-primaria);
+      margin-bottom: 0.5rem;
+    }
+
+    .event-info p {
+      color: var(--cor-texto-claro);
+      margin-bottom: 0;
+    }
+
+    /* Botões */
+    .btn-primary {
+      background: var(--cor-primaria);
+      border: none;
+      padding: 0.5rem 1.5rem;
+      border-radius: 8px;
+    }
+
+    .btn-primary:hover {
+      background: var(--cor-primaria-hover);
+    }
+
+    .btn-danger {
+      border-radius: 8px;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .site-hero h1 {
+        font-size: 2rem;
+      }
+      
+      .filter-section .col-md-4 {
+        margin-bottom: 1rem;
+      }
+      
+      .calendar-grid td {
+        height: 40px;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navegação -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">InforIMEL<span>.</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="imelDropdown" role="button" data-bs-toggle="dropdown">
+              IMEL
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="news.html">Comunicado</a></li>
+              <li><a class="dropdown-item" href="gallery.html">Galeria</a></li>
+              <li><a class="dropdown-item" href="#">Calendário & Horário</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="alunoDropdown" role="button" data-bs-toggle="dropdown">
+              Aluno
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="tobe.html">Ser Aluno</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="libery.html">Biblioteca</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="anexos.html">Anexos</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="sobreDropdown" role="button" data-bs-toggle="dropdown">
+              Sobre o IMEL
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="about.html">Sobre</a></li>
+              <li><a class="dropdown-item" href="drimel.html">Director</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Contactos</a>
+          </li>
+        </ul>
+        <div class="ms-lg-3 mt-3 mt-lg-0 d-flex">
+          <a href="user.html" class="btn btn-primary me-2">
+            <i class="fas fa-user me-1"></i> Perfil
+          </a>
+          <a id="logoutButton" class="btn btn-danger">
+            <i class="fas fa-sign-out-alt me-1"></i> Sair
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="site-hero">
+    <div class="container">
+      <h1>Calendário & Horário</h1>
+      <p class="lead">Acompanhe suas aulas e eventos acadêmicos</p>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="container my-5">
+    <!-- Seção de Filtros -->
+    <section class="filter-section">
+      <h2 class="mb-4">Filtrar por:</h2>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label for="cursoSelect" class="form-label">Curso</label>
+          <select id="cursoSelect" class="form-select">
+            <option value="">-- Escolha um curso --</option>
+            <option value="cursomatematica">Informática de Gestão</option>
+            <option value="cursoportugues">Gestão Empresarial</option>
+            <option value="cursomatematica">Finanças</option>
+            <option value="cursoportugues">Transporte</option>
+            <option value="cursomatematica">Contabilidade</option>
+            <option value="cursoportugues">Contabilidade e Gestão</option>
+            <option value="cursomatematica">Comunicação Social</option>
+            <option value="cursoportugues">Administração Pública</option>
+            <option value="cursomatematica">Comercio</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="turmaSelect" class="form-label">Turma</label>
+          <select id="turmaSelect" class="form-select">
+            <option value="">-- Escolha uma turma --</option>
+            <option value="turmaA">Turma A</option>
+            <option value="turmaB">Turma B</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <label for="salaSelect" class="form-label">Sala</label>
+          <select id="salaSelect" class="form-select">
+            <option value="">-- Escolha uma sala --</option>
+            <option value="sala1">Sala 1</option>
+            <option value="sala2">Sala 2</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Abas -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="horario-tab" data-bs-toggle="tab" data-bs-target="#horario" type="button">
+          <i class="fas fa-calendar-alt me-2"></i> Horário
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="calendario-tab" data-bs-toggle="tab" data-bs-target="#calendario" type="button">
+          <i class="fas fa-calendar-day me-2"></i> Calendário
+        </button>
+      </li>
+    </ul>
+
+    <!-- Conteúdo das Abas -->
+    <div class="tab-content py-4">
+      <!-- Aba Horário -->
+      <div class="tab-pane fade show active" id="horario" role="tabpanel">
+        <div id="horarioContent">
+          <div class="alert alert-info">
+            Selecione um curso, turma e sala para visualizar o horário.
+          </div>
+        </div>
+      </div>
+
+      <!-- Aba Calendário -->
+      <div class="tab-pane fade" id="calendario" role="tabpanel">
+        <div class="calendar-container">
+          <div class="calendar-header">
+            <h3 class="calendar-title" id="monthYear"></h3>
+            <div class="calendar-nav">
+              <button id="prevMonth" class="btn btn-sm me-2"><i class="fas fa-chevron-left"></i></button>
+              <button id="nextMonth" class="btn btn-sm"><i class="fas fa-chevron-right"></i></button>
+            </div>
+          </div>
+          
+          <div class="table-responsive">
+            <table class="calendar-grid">
+              <thead>
+                <tr>
+                  <th>Dom</th>
+                  <th>Seg</th>
+                  <th>Ter</th>
+                  <th>Qua</th>
+                  <th>Qui</th>
+                  <th>Sex</th>
+                  <th>Sáb</th>
+                </tr>
+              </thead>
+              <tbody id="calendarioConteudo"></tbody>
+            </table>
+          </div>
+          
+          <div id="eventInfo" class="event-info" style="display: none;">
+            <h3 id="eventTitle"></h3>
+            <p id="eventDate"></p>
+            <p id="eventDescription"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Rodapé -->
+  <footer class="bg-dark text-white py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h5>InforIMEL</h5>
+          <p>O portal oficial do Instituto Médio de Economia de Luanda.</p>
+        </div>
+        <div class="col-md-4">
+          <h5>Links Rápidos</h5>
+          <ul class="list-unstyled">
+            <li><a href="#" class="text-white">Home</a></li>
+            <li><a href="#" class="text-white">Calendário</a></li>
+            <li><a href="#" class="text-white">Contactos</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <h5>Contactos</h5>
+          <p><i class="fas fa-map-marker-alt me-2"></i> Luanda, Angola</p>
+          <p><i class="fas fa-phone me-2"></i> +244 123 456 789</p>
+          <p><i class="fas fa-envelope me-2"></i> info@imel.edu.ao</p>
+        </div>
+      </div>
+      <hr class="my-4">
+      <div class="text-center">
+        <p class="mb-0">&copy; 2023 INFORIMEL. Todos os direitos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Dados simulados de horários e eventos
+    const horarios = {
+      cursomatematica: {
+        turmaA: {
+          sala1: [
+            ["Segunda", "Matemática (08:00-09:30)", "Física (09:45-11:15)", "Química (11:30-13:00)"],
+            ["Terça", "Álgebra (08:00-09:30)", "Geometria (09:45-11:15)", "Trigonometry (11:30-13:00)"],
+            ["Quarta", "Cálculo (08:00-09:30)", "Probabilidade (09:45-11:15)", "Estatística (11:30-13:00)"],
+            ["Quinta", "Matemática (08:00-09:30)", "Física (09:45-11:15)", "Química (11:30-13:00)"],
+            ["Sexta", "Álgebra (08:00-09:30)", "Geometria (09:45-11:15)", "Trigonometry (11:30-13:00)"]
+          ],
+        },
+        turmaB: {
+          sala2: [
+            ["Segunda", "Álgebra (08:00-09:30)", "Física (09:45-11:15)", "Cálculo (11:30-13:00)"],
+            ["Terça", "Geometria (08:00-09:30)", "Probabilidade (09:45-11:15)", "Estatística (11:30-13:00)"],
+            ["Quarta", "Matemática (08:00-09:30)", "Física (09:45-11:15)", "Química (11:30-13:00)"],
+            ["Quinta", "Álgebra (08:00-09:30)", "Geometria (09:45-11:15)", "Trigonometry (11:30-13:00)"],
+            ["Sexta", "Cálculo (08:00-09:30)", "Probabilidade (09:45-11:15)", "Estatística (11:30-13:00)"]
+          ],
+        },
+      },
+      cursoportugues: {
+        turmaA: {
+          sala1: [
+            ["Segunda", "Literatura (08:00-09:30)", "Gramática (09:45-11:15)", "Redação (11:30-13:00)"],
+            ["Terça", "Língua Portuguesa (08:00-09:30)", "Interpretação (09:45-11:15)", "Análise Textual (11:30-13:00)"],
+            ["Quarta", "Literatura (08:00-09:30)", "Gramática (09:45-11:15)", "Redação (11:30-13:00)"],
+            ["Quinta", "Língua Portuguesa (08:00-09:30)", "Interpretação (09:45-11:15)", "Análise Textual (11:30-13:00)"],
+            ["Sexta", "Literatura (08:00-09:30)", "Gramática (09:45-11:15)", "Redação (11:30-13:00)"]
+          ],
+        },
+        turmaB: {
+          sala2: [
+            ["Segunda", "Literatura Brasileira (08:00-09:30)", "Lingüística (09:45-11:15)", "Análise de Texto (11:30-13:00)"],
+            ["Terça", "Gramática (08:00-09:30)", "Redação (09:45-11:15)", "Interpretação (11:30-13:00)"],
+            ["Quarta", "Literatura Brasileira (08:00-09:30)", "Lingüística (09:45-11:15)", "Análise de Texto (11:30-13:00)"],
+            ["Quinta", "Gramática (08:00-09:30)", "Redação (09:45-11:15)", "Interpretação (11:30-13:00)"],
+            ["Sexta", "Literatura Brasileira (08:00-09:30)", "Lingüística (09:45-11:15)", "Análise de Texto (11:30-13:00)"]
+          ],
+        },
+      },
+    };
+
+    const eventosCalendario = {
+      cursomatematica: {
+        turmaA: {
+          sala1: {
+            "2025-04-15": {
+              title: "Prova de Matemática",
+              description: "Prova parcial sobre álgebra linear e geometria analítica."
+            },
+            "2025-04-20": {
+              title: "Aula Extra de Cálculo",
+              description: "Aula de revisão para a prova da próxima semana."
+            },
+            "2025-04-25": {
+              title: "Entrega de Trabalho",
+              description: "Entrega do trabalho sobre aplicações de derivadas."
+            }
+          },
+        },
+        turmaB: {
+          sala2: {
+            "2025-04-17": {
+              title: "Aula de Física Experimental",
+              description: "Laboratório de mecânica dos fluidos."
+            },
+            "2025-04-22": {
+              title: "Avaliação de Geometria",
+              description: "Avaliação sobre geometria espacial."
+            },
+            "2025-04-28": {
+              title: "Seminário de Matemática",
+              description: "Apresentação de trabalhos em grupos."
+            }
+          },
+        },
+      },
+      cursoportugues: {
+        turmaA: {
+          sala1: {
+            "2025-04-15": {
+              title: "Prova de Literatura",
+              description: "Prova sobre o período romântico brasileiro."
+            },
+            "2025-04-18": {
+              title: "Aula de Redação",
+              description: "Prática de redação dissertativa-argumentativa."
+            },
+            "2025-04-23": {
+              title: "Palestra com Escritor",
+              description: "Encontro com o escritor angolano Ondjaki."
+            }
+          },
+        },
+        turmaB: {
+          sala2: {
+            "2025-04-17": {
+              title: "Apresentação de Projeto de Redação",
+              description: "Apresentação dos projetos finais de redação criativa."
+            },
+            "2025-04-22": {
+              title: "Exercícios de Gramática",
+              description: "Aula prática de concordância verbal e nominal."
+            },
+            "2025-04-27": {
+              title: "Visita à Biblioteca",
+              description: "Atividade de pesquisa para trabalho final."
+            }
+          },
+        },
+      },
+    };
+
+    // Elementos de referência
+    const cursoSelect = document.getElementById("cursoSelect");
+    const turmaSelect = document.getElementById("turmaSelect");
+    const salaSelect = document.getElementById("salaSelect");
+    const horarioDiv = document.getElementById("horarioContent");
+    const calendarioDiv = document.getElementById("calendarioConteudo");
+    const monthYearDiv = document.getElementById("monthYear");
+    const prevMonthBtn = document.getElementById("prevMonth");
+    const nextMonthBtn = document.getElementById("nextMonth");
+    const eventInfoDiv = document.getElementById("eventInfo");
+    const eventTitle = document.getElementById("eventTitle");
+    const eventDate = document.getElementById("eventDate");
+    const eventDescription = document.getElementById("eventDescription");
+
+    let currentMonth = new Date().getMonth();
+    let currentYear = new Date().getFullYear();
+
+    // Event listeners
+    cursoSelect.addEventListener("change", atualizarVisualizacao);
+    turmaSelect.addEventListener("change", atualizarVisualizacao);
+    salaSelect.addEventListener("change", atualizarVisualizacao);
+    prevMonthBtn.addEventListener("click", () => {
+      currentMonth--;
+      if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+      }
+      atualizarCalendario();
+    });
+    nextMonthBtn.addEventListener("click", () => {
+      currentMonth++;
+      if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+      }
+      atualizarCalendario();
+    });
+
+    // Logout
+    document.getElementById("logoutButton").addEventListener("click", function(event) {
+      event.preventDefault();
+      localStorage.removeItem('page1Visited');
+      window.location.href = '../index.html';
+    });
+
+    // Inicialização
+    document.addEventListener("DOMContentLoaded", function() {
+      atualizarCalendario();
+    });
+
+    function atualizarVisualizacao() {
+      const curso = cursoSelect.value;
+      const turma = turmaSelect.value;
+      const sala = salaSelect.value;
+
+      if (curso && turma && sala) {
+        mostrarHorario(curso, turma, sala);
+        atualizarCalendario();
+      } else {
+        horarioDiv.innerHTML = '<div class="alert alert-info">Selecione um curso, turma e sala para visualizar o horário.</div>';
+        calendarioDiv.innerHTML = '';
+        monthYearDiv.textContent = '';
+        eventInfoDiv.style.display = 'none';
+      }
+    }
+
+    function mostrarHorario(curso, turma, sala) {
+      const horario = horarios[curso]?.[turma]?.[sala];
+      if (!horario) {
+        horarioDiv.innerHTML = '<div class="alert alert-warning">Horário não disponível para esta seleção.</div>';
+        return;
+      }
+
+      const tabela = horario.map(linha =>
+        `<tr>${linha.map(col => `<td>${col}</td>`).join("")}</tr>`
+      ).join("");
+
+      horarioDiv.innerHTML = `
+        <div class="schedule-table-container">
+          <h3 class="mb-4">Horário - ${turma} (Sala ${sala})</h3>
+          <div class="table-responsive">
+            <table class="table schedule-table">
+              <thead>
+                <tr>
+                  <th>Dia</th>
+                  <th>Manhã</th>
+                  <th>Tarde</th>
+                  <th>Noite</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${tabela}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    function atualizarCalendario() {
+      const curso = cursoSelect.value;
+      const turma = turmaSelect.value;
+      const sala = salaSelect.value;
+
+      if (!curso || !turma || !sala) {
+        return;
+      }
+
+      const eventos = eventosCalendario[curso]?.[turma]?.[sala] || {};
+      const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
+      const lastDayOfMonth = new Date(currentYear, currentMonth + 1, 0);
+      const daysInMonth = lastDayOfMonth.getDate();
+      const startingDay = firstDayOfMonth.getDay();
+
+      let calendarBody = '';
+      let date = 1;
+
+      monthYearDiv.textContent = `${getMonthName(currentMonth)} ${currentYear}`;
+
+      for (let i = 0; i < 6; i++) {
+        if (date > daysInMonth) break;
+
+        calendarBody += '<tr>';
+        
+        for (let j = 0; j < 7; j++) {
+          if (i === 0 && j < startingDay) {
+            calendarBody += '<td></td>';
+          } else if (date > daysInMonth) {
+            calendarBody += '<td></td>';
+          } else {
+            const currentDate = new Date(currentYear, currentMonth, date);
+            const dateString = formatDate(currentDate);
+            const event = eventos[dateString];
+            const dayClass = event ? 'event-day' : '';
+            const todayClass = isToday(currentDate) ? 'today' : '';
+
+            calendarBody += `
+              <td class="${dayClass} ${todayClass}" data-date="${dateString}">
+                ${date}
+                ${event ? '<div class="event-dot"></div>' : ''}
+              </td>
+            `;
+            date++;
+          }
+        }
+        
+        calendarBody += '</tr>';
+      }
+
+      calendarioDiv.innerHTML = calendarBody;
+
+      // Adiciona eventos de clique aos dias com eventos
+      document.querySelectorAll('.event-day').forEach(day => {
+        day.addEventListener('click', () => {
+          const date = day.getAttribute('data-date');
+          const event = eventos[date];
+          
+          eventTitle.textContent = event.title;
+          eventDate.textContent = `Data: ${formatDisplayDate(date)}`;
+          eventDescription.textContent = event.description;
+          
+          eventInfoDiv.style.display = 'block';
+        });
+      });
+    }
+
+    function getMonthName(monthIndex) {
+      const months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", 
+                     "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+      return months[monthIndex];
+    }
+
+    function formatDate(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function formatDisplayDate(dateString) {
+      const [year, month, day] = dateString.split('-');
+      return `${day}/${month}/${year}`;
+    }
+
+    function isToday(date) {
+      const today = new Date();
+      return date.getDate() === today.getDate() && 
+             date.getMonth() === today.getMonth() && 
+             date.getFullYear() === today.getFullYear();
+    }
+  </script>
+</body>
+</html>

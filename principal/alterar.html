@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alterar Senha</title>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+
+    <!-- Estilos CSS -->
+    <style>
+        body {
+            background-color: #0a0f1e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .container {
+            background: rgba(10, 15, 30, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px #00f2ff;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #00f2ff;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #ff0000;
+        }
+
+        h2 {
+            color: #00f2ff;
+            text-shadow: 0 0 10px #00f2ff;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background: #0a1c3b;
+            color: white;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        button.aa {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #00f2ff;
+            color: #0a0f1e;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1rem;
+        }
+
+        button.aa:hover {
+            background: #0088aa;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            input, button {
+                font-size: 0.9rem;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Botão de fechar -->
+    <button class="close-btn" onclick="fecharPagina();">&times;</button>
+
+    <!-- Formulário de alteração de senha -->
+    <div class="container">
+        <h2>Alterar Senha</h2>
+        <input 
+            type="text" 
+            id="processo" 
+            placeholder="Número de Processo" 
+            pattern="\d*" 
+            oninput="this.value = this.value.replace(/\D/g, '')"
+        >
+        <input type="password" id="senhaAtual" placeholder="Senha Atual">
+        <input type="password" id="novaSenha" placeholder="Nova Senha">
+        <button onclick="alterarSenha()" class="aa">Salvar Nova Senha</button>
+    </div>
+
+    <!-- Script Firebase (módulo ES6) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { 
+            getFirestore, 
+            collection, 
+            query, 
+            where, 
+            getDocs, 
+            doc, 
+            updateDoc 
+        } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+        // Configurações do Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyD6_K4aHxzYtcYPjeudsSQW_kQKNF4TH-c",
+            authDomain: "inforimel-679f3.firebaseapp.com",
+            projectId: "inforimel-679f3",
+            storageBucket: "inforimel-679f3.appspot.com",
+            messagingSenderId: "729241397682",
+            appId: "1:729241397682:web:961681efd9e702c1045cab"
+        };
+
+        // Inicialização do Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Função para alterar a senha
+        async function alterarSenha() {
+            const processo = document.getElementById("processo").value.trim();
+            const senhaAtual = document.getElementById("senhaAtual").value.trim();
+            const novaSenha = document.getElementById("novaSenha").value.trim();
+            const processoLogado = localStorage.getItem("processo");
+
+            // Verificação de campos vazios
+            if (!processo || !senhaAtual || !novaSenha) {
+                alert("Por favor, preencha todos os campos!");
+                return;
+            }
+
+            // Verifica se o processo informado é o mesmo que está logado
+            if (processo !== processoLogado) {
+                alert("Você só pode alterar a senha do processo com o qual está logado.");
+                return;
+            }
+
+            try {
+                const usuariosRef = collection(db, "alunos");
+                const q = query(usuariosRef, where("processo", "==", processo));
+                const querySnapshot = await getDocs(q);
+
+                // Se o processo não for encontrado
+                if (querySnapshot.empty) {
+                    alert("Número de processo não encontrado!");
+                    return;
+                }
+
+                let senhaAlterada = false;
+
+                // Verifica se a senha atual está correta e atualiza com a nova
+                for (const docSnap of querySnapshot.docs) {
+                    const dados = docSnap.data();
+
+                    if (dados.senha === senhaAtual) {
+                        const userRef = doc(db, "alunos", docSnap.id);
+                        await updateDoc(userRef, { senha: novaSenha });
+                        senhaAlterada = true;
+                        break;
+                    }
+                }
+
+                // Mensagens de sucesso ou erro
+                if (senhaAlterada) {
+                    alert("Senha alterada com sucesso!");
+                    window.location.href = "index.html";
+                } else {
+                    alert("Senha atual incorreta!");
+                }
+
+            } catch (error) {
+                console.error("Erro ao alterar senha:", error);
+                alert("Erro ao conectar com o banco de dados!");
+            }
+        }
+
+        // Torna a função acessível fora do módulo
+        window.alterarSenha = alterarSenha;
+    </script>
+
+    <!-- Script para fechar a página -->
+    <script>
+        function fecharPagina() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

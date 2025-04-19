@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <!-- 
+    =============================================
+    METADADOS E CONFIGURAÇÕES BÁSICAS
+    =============================================
+  -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="author" content="Untree.co">
+  <meta name="description" content="Página sobre o Instituto Médio de Economia de Luanda (IMEL)">
+  <meta name="keywords" content="IMEL, escola técnica, Luanda, economia, Angola">
+  
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="favicon.png">
+  
+  <!-- Título da página -->
+  <title>INFORIMEL | Sobre</title>
+  
+  <!-- 
+    =============================================
+    LINKS PARA FONTES EXTERNAS
+    =============================================
+  -->
+  <!-- Fontes do Google -->
+  <link href="https://fonts.googleapis.com/css2?family=Display+Playfair:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Ícones Unicons -->
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+  
+  <!-- 
+    =============================================
+    FOLHAS DE ESTILO CSS
+    =============================================
+  -->
+  <!-- Bootstrap e plugins -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/animate.min.css">
+  <link rel="stylesheet" href="css/owl.carousel.min.css">
+  <link rel="stylesheet" href="css/owl.theme.default.min.css">
+  <link rel="stylesheet" href="css/jquery.fancybox.min.css">
+  
+  <!-- Ícones personalizados -->
+  <link rel="stylesheet" href="fonts/icomoon/style.css">
+  <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
+  
+  <!-- Estilos personalizados -->
+  <link rel="stylesheet" href="css/aos.css">
+  <link rel="stylesheet" href="css/style.css">
+  
+  <!-- 
+    =============================================
+    ESTILOS INLINE (CSS NA PÁGINA)
+    =============================================
+  -->
+  <style>
+    /* Estilos básicos para títulos */
+    h1, h2 {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    
+    /* Estilos para o menu flutuante de navegação */
+    #floatingNav {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 1000;
+    }
+    
+    #navButtons {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    
+    #floatingNav button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    #floatingNav button:hover {
+      background-color: #0056b3;
+    }
+    
+    /* Responsividade para telas pequenas */
+    @media (max-width: 768px) {
+      #floatingNav {
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+        flex-direction: row;
+        justify-content: center;
+        gap: 5px;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+      
+      #floatingNav button {
+        padding: 8px 12px;
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 
+    =============================================
+    MENU MOBILE
+    =============================================
+  -->
+  <div class="site-mobile-menu">
+    <div class="site-mobile-menu-header">
+      <div class="site-mobile-menu-close">
+        <span class="icofont-close js-menu-toggle"></span>
+      </div>
+    </div>
+    <div class="site-mobile-menu-body"></div>
+  </div>
+  
+  <!-- 
+    =============================================
+    NAVEGAÇÃO PRINCIPAL
+    =============================================
+  -->
+  <nav class="site-nav mb-5">
+    <!-- Barra superior -->
+    <div class="pb-2 top-bar mb-3">
+      <div class="container">
+        <div class="row align-items-center">
+          <!-- Conteúdo adicional pode ser adicionado aqui -->
+        </div>
+      </div>
+    </div>
+    
+    <!-- Navegação sticky (fixa no topo ao rolar) -->
+    <div class="sticky-nav js-sticky-header">
+      <div class="container position-relative">
+        <div class="site-navigation text-center">
+          <!-- Logo do site -->
+          <a href="index.html" class="logo menu-absolute m-0">InforIMEL<span class="text-primary">.</span></a>
+          
+          <!-- Menu principal -->
+          <ul class="js-clone-nav d-none d-lg-inline-block site-menu">
+            <li><a href="index.html">Home</a></li>
+            
+            <li class="has-children">
+              <a>IMEL</a>
+              <ul class="dropdown">
+                <li><a href="news.html">Comunicado</a></li>
+                <li><a href="gallery.html">Galeria</a></li>
+                <li><a href="call.html">Calendário & Horário</a></li>
+              </ul>
+            </li>
+            
+            <li class="has-children">
+              <a>Aluno</a>
+              <ul class="dropdown">
+                <li><a href="tobe.html">Ser Aluno</a></li>
+              </ul>
+            </li>
+            
+            <li><a href="libery.html">Bibilioteca</a></li>
+            <li><a href="anexos.html">Anexos</a></li>
+            
+            <li class="has-children">
+              <a>Sobre o IMEL</a>
+              <ul class="dropdown">
+                <li><a href="about.html">Sobre</a></li>
+                <li><a href="drimel.html">Director</a></li>
+              </ul>
+            </li>
+            
+            <li><a href="contact.html">Contactos</a></li>
+          </ul>
+          
+          <!-- Botões de perfil e logout -->
+          <a href="user.html" class="btn btn-primary btn-sm">
+            <i class="uil uil-user"></i> Perfil
+          </a>
+          
+          <a id="logoutButton" class="btn btn-danger btn-sm menu-absolute">
+            <span></span>Terminar Sessão
+          </a>
+          
+          <!-- Botão de menu hambúrguer (para mobile) -->
+          <a href="#" class="burger ml-auto float-right site-menu-toggle js-menu-toggle d-inline-block d-lg-none light" 
+             data-toggle="collapse" data-target="#main-navbar">
+            <span></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- 
+    =============================================
+    SEÇÃO HERO (BANNER PRINCIPAL)
+    =============================================
+  -->
+  <div class="untree_co-hero overlay" style="background-image: url('images/img-school-1-min.jpg');">
+    <div class="container">
+      <div class="row align-items-center justify-content-center">
+        <div class="col-12">
+          <div class="row justify-content-center">
+            <div class="col-lg-6 text-center">
+              <a href="#" data-fancybox data-aos="fade-up" data-aos-delay="0" class="caption mb-4 d-inline-block">Sobre o IMEL</a>
+              <h1 class="mb-4 heading text-white" data-aos="fade-up" data-aos-delay="100">Tudo sobre o IMEL</h1>
+              <p class="mb-0" data-aos="fade-up" data-aos-delay="300"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 
+    =============================================
+    SEÇÃO 1: INFORMAÇÕES SOBRE O IMEL
+    =============================================
+  -->
+  <div id="section1" class="services-section">
+    <div class="container">
+      <div class="row justify-content-between">
+        <!-- Coluna de texto -->
+        <div class="col-lg-4 mb-5 mb-lg-0">
+          <div class="section-title mb-3" data-aos="fade-up" data-aos-delay="0">
+            <h2 class="line-bottom mb-4">IMEL</h2>
+          </div>
+          
+          <p data-aos="fade-up" data-aos-delay="100">
+            O Instituto Médio de Economia de Luanda (IMEL) é uma instituição pública de ensino técnico adstrita ao Ministério da Educação, 
+            e tendo por vocação a formação de técnicos médios para o sector da economia, e como base os serviços públicos e a empresa.
+          </p>
+          
+          <p>
+            O IMEL foi fundado (ou criado) no ano lectivo de <strong>1990</strong>, na sequência da extinção do antigo complexo escola 
+            <strong>Karl Marx-Makarenko</strong>, da qual vira a resultar a crição de novos instituto médios: o IMEL (para o sector da economia) 
+            e o IMIL (para o da insdútria).
+          </p>
+          
+          <p>
+            Actualmente, e à luz da reforma do ensino técnico proficional o IMEL funciona com três (3) áreas de formação, a saber: 
+            <strong>Administrção & Serviços, Informática e Comunicação & Informação.</strong>
+          </p>
+          
+          <p>A área de Administração & Serviços abarca quatro curso:</p>
+          <ul data-aos="fade-up" data-aos-delay="200">
+            <strong><li>Administração Pública</li></strong>
+            <strong><li>Contabilidade</li></strong>
+            <strong><li>Estatística & Planejamento</li></strong>
+            <strong><li>Gestão Empresarial</li></strong>
+          </ul>
+          
+          <p>
+            A área de Informática funciona, nesta fase inicial, com apenas um curso, o de <strong>Informática de Gestão</strong>. 
+            A área de Comunicação & Informação funciona igualmente com apenas um único curso, o de <strong>Comunicação Social</strong>.
+          </p>
+        </div>
+        
+        <!-- Coluna de imagem -->
+        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="0">
+          <figure class="img-rap-2">
+            <img src="images/imel.png" alt="Imagem do IMEL" class="img-fluid">
+            <div class="dotted">
+              <p>
+                Tal como acontece com as demais escolas técnicas de nível médio, os cursos técnicos do IMEL têm a duração de três anos, 
+                indo o percurso de dormação da 10ª á 12ª classes, fachando com <strong>Prova de Aptidão Proficional</strong>, que tem como
+                suporte metodológico a disciplina de <strong>Projecto Tecnológico</strong>. A julgar pela tipologia de cursos ministrados,
+                é fácil perceber que IMEL é uma das muitas instituição da política do técnico que trabalham para a materializaçãoda política
+                do Ministério da Educação orientanda para formaçãode técnicos de economia, tendo em vista a satisfação das necessidades do 
+                mercado de trabalho.
+              </p>
+            </div>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 
+    =============================================
+    SEÇÃO 2: ÁREAS DE FORMAÇÃO
+    =============================================
+  -->
+  <div id="section2" class="untree_co-section">
+    <div class="container">
+      <!-- Título da seção -->
+      <div class="row justify-content-center mb-3" onclick="window.location.href='cursos/inforgest.html'">
+        <div class="col-lg-7 text-center" data-aos="fade-up" data-aos-delay="0">
+          <h2 class="line-bottom text-center mb-4">Áreas de Formação</h2>
+        </div>
+      </div>
+      
+      <!-- Listagem das áreas de formação -->
+      <div class="row align-items-stretch">
+        <!-- Informática de Gestão -->
+        <div class="col-sm-6 col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="0" onclick="window.location.href='cursos/inforgest.html'">
+          <a href="#" class="category d-flex align-items-start h-100">
+            <div><i class="uil uil-desktop"></i></div>
+            <div>
+              <h3>Informática de Gestão</h3>
+              <span>Técnico</span>
+            </div>
+          </a>
+        </div>
+        
+        <!-- Gestão Empresarial -->
+        <div class="col-sm-6 col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="100" onclick="window.location.href='cursos/empgest.html'">
+          <a href="#" class="category d-flex align-items-start h-100">
+            <div><i class="uil uil-briefcase"></i></div>
+            <div>
+              <h3>Gestão Empresarial</h3>
+              <span>Técnico</span>
+            </div>
+          </a>
+        </div>
+        
+        <!-- Finanças -->
+        <div class="col-sm-6 col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="200" onclick="window.location.href='cursos/fin.html'">
+          <a href="#" class="category d-flex align-items-start h-100">
+            <div><i class="uil uil-calculator"></i></div>
+            <div>
+              <h3>Finanças</h3>
+              <span>Técnico</span>
+            </div>
+          </a>
+        </div>
+        
+        <!-- Transporte -->
+        <div class="col-sm-6 col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="300" onclick="window.location.href='cursos/transp.html'" >
+          <a href="#" class="category d-flex align-items-start h-100">
+            <div><i class="uil uil-car"></i></div>
+            <div>
+              <h3>Transporte</h3>
+              <span>Técnico</span>
+            </div>
+          </a>
+        </div>
+        
+        <!-- Contabilidade -->
+        <div class="col-sm-6 col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="0" onclick="window.location.href='cursos/cogest.html'">
+          <a href="#" class="category d-flex align-items-start h-100">
+            <div><i class="uil uil-dollar-sign"></i></div>
+            <div>
+              <h3>Contabilidade</h3>
+              <span>Técnico</span>
+            </div>
+          </a>
+        </div>
+        
+        <!-- Contabilidade e Gestão -->
+        <div class="col-sm-6 col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="100" onclick="window.location.href='cursos/cogest.html'">
+          <a href="#" class="category d-flex align-items-start h-100">
+            <div><i class="uil uil-chart-pie"></i></div>
+            <div>
+              <h3>Contabilidade e Gestão</h3>
+              <span>Técnico</span>
+            </div>
+          </a>
+        </div>
+        
+        <!-- Comunicação Social -->
+        <div class="col-sm-6 col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="200" onclick="window.location.href='cursos/comun.html'">
+          <a href="#" class="category d-flex align-items-start h-100">
+            <div><i class="uil uil-camera"></i></div>
+            <div>
+              <h3>Comunicação Social</h3>
+              <span>Técnico</span>
+            </div>
+          </a>
+        </div>
+        
+        <!-- Estatística -->
+        <div class="col-sm-6 col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="300" onclick="window.location.href='cursos/estatistca.html'" >
+          <a href="#" class="category d-flex align-items-start h-100">
+            <div><i class="uil uil-circle-layer"></i></div>
+            <div>
+              <h3>Estatistica</h3>
+              <span>Técnico</span>
+            </div>
+          </a>
+        </div>
+        
+        <!-- Espaço vazio (layout) -->
+        <div class="col-sm-6 col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="200">
+          <a href="#" class="">
+            <div></div>
+            <div>
+              <h3></h3>
+              <span></span>
+            </div>
+          </a>
+        </div>
+        
+        <!-- Administração Pública -->
+        <div class="col-sm-6 col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="200" onclick="window.location.href='cursos/admin.html'">
+          <a href="#" class="category d-flex align-items-start h-100">
+            <div><i class="uil uil-camera"></i></div>
+            <div>
+              <h3>Administração Pública</h3>
+              <span>Técnico</span>
+            </div>
+          </a>
+        </div>
+        
+        <!-- Comércio -->
+        <div class="col-sm-6 col-md-6 col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="200" onclick="window.location.href='cursos/comerc.html'">
+          <a href="#" class="category d-flex align-items-start h-100">
+            <div><i class="uil uil-camera"></i></div>
+            <div>
+              <h3>Comercio</h3>
+              <span>Técnico</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Rodapé da seção -->
+      <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="400">
+        <div class="col-lg-8 text-center">
+          <p>IMEL tem ampla variedade de cursos para você</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 
+    =============================================
+    SEÇÃO 3: VALORES, MISSÃO E VISÃO
+    =============================================
+  -->
+  <div id="section3" class="untree_co-section">
+    <div class="container">
+      <div class="row justify-content-center mb-5">
+        <div class="col-lg-7 text-center" data-aos="fade-up" data-aos-delay="0">
+          <h2 class="line-bottom text-center mb-4">Instituto Médio de Economia de Luanda</h2>
+          <p>Escola Nº 1142</p>
+        </div>
+      </div>
+      
+      <!-- Cards de Valores, Missão e Visão -->
+      <div class="row">
+        <!-- Valores -->
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="feature">
+            <i class="uil uil-balance-scale"></i>
+            <h3>Valores</h3>
+            <p></p>
+            <ul>
+              <li><strong>Excelência Acadêmica:</strong> Compromisso com a qualidade e relevância do ensino.</li>
+              <li><strong>Inclusão e Igualdade:</strong> Garantir acesso ao ensino para todos, promovendo equidade.</li>
+              <li><strong>Responsabilidade Social:</strong> Contribuir para o progresso social e econômico da comunidade.</li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- Missão -->
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="feature">
+            <i class="uil uil-arrow-growth"></i>
+            <h3>Misão</h3>
+            <p>
+              Formar técnicos médios qualificados e preparados para contribuir de forma eficaz no desenvolvimento 
+              socioeconômico de Angola, promovendo conhecimentos práticos e teóricos nas áreas de economia, gestão e 
+              administração. O instituto visa fornecer uma educação de qualidade que capacite os jovens para o mercado 
+              de trabalho ou para a continuidade dos estudos.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Visão -->
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+          <div class="feature">
+            <i class="uil uil-eye"></i>
+            <h3>Visão</h3>
+            <p>
+              Ser uma instituição de referência nacional e internacional na formação de técnicos médios nas áreas 
+              econômicas e administrativas, reconhecida pela excelência no ensino, pela inovação e pela contribuição 
+              para o desenvolvimento sustentável de Angola.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 
+    =============================================
+    SEÇÃO 4: NOSSO IMEL (COMUNIDADE)
+    =============================================
+  -->
+  <div id="section4" class="untree_co-section bg-light">
+    <div class="container">
+      <div class="row justify-content-center mb-5">
+        <div class="col-lg-7 text-center" data-aos="fade-up" data-aos-delay="0">
+          <h2 class="line-bottom text-center mb-4">Nosso IMEL</h2>
+          <p>Os que fazem o IMEL são todos que nele estão ligado</p>
+        </div>
+      </div>
+      
+      <div class="row">
+        <!-- Professores -->
+        <div class="col-12 col-sm-6 col-md-6 mb-4 mb-lg-0 col-lg-4" data-aos="fade-up" data-aos-delay="0">
+          <div class="staff text-center">
+            <div class="staff-body">
+              <h3 class="staff-name">Professores</h3>
+              <span class="d-block position mb-4">200 Profissionais</span>
+              <p class="mb-4">
+                Muitos dos professores têm vivência no mercado de trabalho, atuando como contadores, gestores, 
+                economistas ou consultores.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Funcionários -->
+        <div class="col-12 col-sm-6 col-md-6 mb-4 mb-lg-0 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="staff text-center">
+            <div class="staff-body">
+              <h3 class="staff-name">Funcionario</h3>
+              <span class="d-block position mb-4">+10 Profissionais</span>
+              <p class="mb-4">
+                Coordenam e supervisionam todas as atividades da escola, garantindo que os objetivos 
+                institucionais sejam alcançados.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Alunos -->
+        <div class="col-12 col-sm-6 col-md-6 mb-4 mb-lg-0 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="staff text-center">
+            <div class="staff-body">
+              <h3 class="staff-name">Alunos</h3>
+              <span class="d-block position mb-4">+4 MIL Alunos</span>
+              <p class="mb-4">
+                Jovens em formação técnica e profissional, com o objetivo de adquirir conhecimentos práticos 
+                e teóricos nas áreas de economia, gestão e administração.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 
+    =============================================
+    SEÇÃO 5: ESTRUTURA FÍSICA
+    =============================================
+  -->
+  <div id="section5" class="untree_co-section">
+    <div class="container">
+      <div class="row justify-content-center mb-5">
+        <div class="col-lg-7 text-center" data-aos="fade-up" data-aos-delay="0">
+          <h2 class="line-bottom text-center mb-4">Estrutura</h2>
+          <p>
+            A estrutura do IMEL visa proporcionar um ambiente de ensino organizado, eficiente e voltado para as 
+            necessidades dos alunos, tendo uma area de 44 200 m2.
+          </p>
+        </div>
+      </div>
+      
+      <div class="row">
+        <!-- Salas de Aula -->
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="feature">
+            <span class="uil uil-book-reader mb-4"></span>
+            <h3>Sala de Aulas</h3>
+            <p>
+              No IMEL temos salas aulas onde o conhecimento é compartilhado, promovendo a interação entre 
+              alunos e professores em um ambiente de aprendizado.
+            </p>
+            <p><strong>29 Salas</strong></p>
+          </div>
+        </div>
+        
+        <!-- Laboratórios -->
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="feature">
+            <span class="uil uil-presentation-play"></span>
+            <h3>Laboratorios</h3>
+            <p>
+              Os laboratórios de IMEL são espaços especializados equipados para experimentação e pesquisa, 
+              fundamentais para práticas educativas, com equipamentos adquando.
+            </p>
+            <p><strong>06 Laboratorios</strong></p>
+          </div>
+        </div>
+        
+        <!-- Biblioteca -->
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+          <div class="feature">
+            <span class="uil uil-books"></span>
+            <h3>Bibilioteca</h3>
+            <p>
+              No IMEL contamos com uma Bibilioteca dedicada ao acesso e preservação do conhecimento, oferecendo 
+              livros e recursos para estudo e pesquisa, com conforto para o melhor aprendizado.
+            </p>
+            <p><strong>1 Bibilioteca</strong></p>
+          </div>
+        </div>
+        
+        <!-- Coordenações -->
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="feature">
+            <span class="uil uil-user-check"></span>
+            <h3>Coordenações</h3>
+            <p>
+              As coordenações do IMEL são setores responsáveis pela organização acadêmica e administrativa, 
+              garantindo o funcionamento eficiente das atividades escolares, dividida de acordo os curso.
+            </p>
+            <p><strong>8 Coordenações</strong></p>
+          </div>
+        </div>
+        
+        <!-- Sala de Reuniões -->
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+          <div class="feature">
+            <span class="uil uil-users-alt"></span>
+            <h3>Sala de Reuniões</h3>
+            <p>
+              Temos um ambiente destinado a encontros e discussões, promovendo planejamento e tomadas de 
+              decisão em grupo, com uma sala de reunião equipada para fornecer uma melhor experencia.
+            </p>
+            <p><strong>1 Sala de Reunião</strong></p>
+          </div>
+        </div>
+        
+        <!-- Secretaria Pedagógica -->
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+          <div class="feature">
+            <span class="uil uil-ellipsis-h"></span>
+            <h3>Secretaria Pedagogica</h3>
+            <p>
+              Muito mais são espaços e serviços que complementam o ambiente escolar, promovendo atividades 
+              culturais, esportivas e de integração.
+            </p>
+            <p><strong>Refeitorio</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 
+    =============================================
+    RODAPÉ
+    =============================================
+  -->
+  <div class="site-footer">
+    <div class="container">
+      <div class="row mt-5">
+        <div class="col-12 text-center">
+          <p class="copyright">
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script>. 
+            Todos os Direitos Reservados. &mdash; Instituto Médio de Economia de Luanda- 
+            <a href="index.html">IMEL</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 
+    =============================================
+    MENU FLUTUANTE DE NAVEGAÇÃO
+    =============================================
+  -->
+  <div id="floatingNav">
+    <button id="menuButton" onclick="toggleMenu()">Menu</button>
+    <div id="navButtons" style="display: none;">
+      <button onclick="scrollToSection('section1')">Sobre o IMEL</button>
+      <button onclick="scrollToSection('section2')">Área de Formação</button>
+      <button onclick="scrollToSection('section3')">Valores, Missão e Visão</button>
+      <button onclick="scrollToSection('section4')">Nosso IMEL</button>
+      <button onclick="scrollToSection('section5')">Estrutura</button>
+    </div>
+  </div>
+  
+  <!-- 
+    =============================================
+    SCRIPTS JS
+    =============================================
+  -->
+  <!-- jQuery e plugins -->
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.animateNumber.min.js"></script>
+  <script src="js/jquery.waypoints.min.js"></script>
+  <script src="js/jquery.fancybox.min.js"></script>
+  <script src="js/jquery.sticky.js"></script>
+  
+  <!-- Animações e scripts personalizados -->
+  <script src="js/aos.js"></script>
+  <script src="js/custom.js"></script>
+  <script src="script.js"></script>
+  
+  <!-- Scripts específicos da página -->
+  <script>
+    // Função para rolar até uma seção específica
+    function scrollToSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    
+    // Função para alternar a visibilidade dos botões e mudar o texto do botão
+    function toggleMenu() {
+      const navButtons = document.getElementById('navButtons');
+      const menuButton = document.getElementById('menuButton');
+      
+      if (navButtons.style.display === 'none' || navButtons.style.display === '') {
+        navButtons.style.display = 'flex';
+        menuButton.textContent = 'X'; // Muda o texto para "X"
+      } else {
+        navButtons.style.display = 'none';
+        menuButton.textContent = 'Menu'; // Muda o texto de volta para "Menu"
+      }
+    }
+  </script>
+</body>
+</html>

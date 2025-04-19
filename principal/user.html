@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Estudante - IMEL</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cor-primaria: #0047AB;
+            --cor-primaria-hover: #003580;
+            --cor-secundaria: #FF6B35;
+            --cor-destaque: #00C49A;
+            --cor-fundo: #f8fafc;
+            --cor-texto: #2d3748;
+            --cor-texto-claro: #718096;
+            --cor-borda: #e2e8f0;
+            --sombra-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --sombra-card-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--cor-fundo);
+            color: var(--cor-texto);
+        }
+
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--cor-primaria), #002855);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .sidebar {
+            background: white;
+            min-height: calc(100vh - 60px);
+            padding: 20px 0;
+            border-right: 1px solid var(--cor-borda);
+            position: sticky;
+            top: 60px;
+            height: 100%;
+        }
+
+        .main-content {
+            padding: 30px;
+            background: var(--cor-fundo);
+            min-height: calc(100vh - 60px);
+        }
+
+        .info-card {
+            border: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: var(--sombra-card);
+            background: white;
+            padding: 1.5rem;
+            height: 100%;
+            border-left: 4px solid var(--cor-primaria);
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--sombra-card-hover);
+        }
+
+        .info-card h5 {
+            color: var(--cor-texto-claro);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-card h2, .info-card h4 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-card small {
+            color: var(--cor-texto-claro);
+            font-size: 0.8rem;
+        }
+
+        .nav-link {
+            color: var(--cor-texto);
+            padding: 12px 20px;
+            margin: 4px 10px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(0, 71, 171, 0.1);
+            color: var(--cor-primaria);
+        }
+
+        .nav-link.active {
+            background: linear-gradient(135deg, var(--cor-primaria), var(--cor-primaria-hover));
+            color: white !important;
+            box-shadow: 0 4px 6px rgba(0, 71, 171, 0.2);
+        }
+
+        .nav-link i {
+            width: 20px;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        .dropdown-menu {
+            border: none;
+            box-shadow: var(--sombra-card-hover);
+            border-radius: 8px;
+            padding: 8px 0;
+        }
+
+        .dropdown-item {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            margin: 2px 8px;
+            width: auto;
+        }
+
+        .dropdown-item:hover {
+            background-color: rgba(0, 71, 171, 0.1);
+            color: var(--cor-primaria);
+        }
+
+        .btn-light {
+            background-color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .btn-light:hover {
+            background-color: #f1f5f9;
+        }
+
+        /* Tabela de horários */
+        .table {
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--sombra-card);
+            background: white;
+        }
+
+        .table thead th {
+            background: var(--cor-primaria);
+            color: white;
+            font-weight: 500;
+            padding: 12px;
+            text-align: center;
+            border: none;
+        }
+
+        .table tbody td {
+            padding: 12px;
+            border: 1px solid var(--cor-borda);
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: rgba(0, 71, 171, 0.03);
+        }
+
+        .table tbody tr:hover {
+            background-color: rgba(0, 71, 171, 0.05);
+        }
+
+        /* Modal */
+        .modal-content {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .modal-header {
+            padding: 16px 24px;
+        }
+
+        .modal-body {
+            padding: 0;
+        }
+
+        .list-group-item {
+            border: none;
+            border-bottom: 1px solid var(--cor-borda);
+            padding: 16px 24px;
+            font-weight: 500;
+        }
+
+        .list-group-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .sidebar {
+                min-height: auto;
+                position: relative;
+                top: 0;
+            }
+            
+            .main-content {
+                padding: 20px;
+            }
+        }
+
+        /* Animação de loading */
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        .loading {
+            animation: pulse 1.5s infinite;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="dashboard-header">
+    <!-- Botão hamburguer visível apenas em telas pequenas -->
+    <div class="container d-md-none px-3">
+        <button class="btn btn-light" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+    
+    <div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="mobileSidebar">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title">Menu</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+          <!-- Sidebar aqui dentro -->
+          <nav class="sidebar">
+              <div class="list-group list-group-flush">
+                  <a href="#" class="list-group-item list-group-item-action active">
+                      <i class="fas fa-home me-2"></i> Dashboard
+                  </a>
+                  <a href="call.html" class="list-group-item list-group-item-action">
+                      <i class="fas fa-calendar-alt me-2"></i> Calendário & Horários
+                  </a>
+                  <a href="#" class="list-group-item list-group-item-action" onclick="abrirModalDisciplinas()">
+                      <i class="fas fa-book-open me-2"></i> Disciplinas
+                  </a>                
+                  <a href="#" class="list-group-item list-group-item-action">
+                      <i class="fas fa-file-invoice me-2"></i> Documentos
+                  </a>
+                  <a href="#" class="list-group-item list-group-item-action">
+                      <i class="fas fa-chart-line me-2"></i> Desempenho
+                  </a>
+                  <a href="alterar.html" class="list-group-item list-group-item-action">
+                    <i class="fas fa-key me-2"></i> Alterar Senha
+                </a>
+                  <a href="#" class="list-group-item list-group-item-action" id="sair">
+                      <i class="fas fa-sign-out-alt me-2"></i> Sair
+                  </a>
+              </div>
+          </nav>
+        </div>
+      </div>
+      
+</header>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-3 col-lg-2 sidebar d-none d-md-block">
+            <div class="list-group list-group-flush">
+                <a href="#" class="list-group-item list-group-item-action active">
+                    <i class="fas fa-home me-2"></i> Dashboard
+                </a>
+                <a href="call.html" class="list-group-item list-group-item-action">
+                    <i class="fas fa-calendar-alt me-2"></i> Calendário & Horários
+                </a>
+                <a href="#" class="list-group-item list-group-item-action" onclick="abrirModalDisciplinas()">
+                    <i class="fas fa-book-open me-2"></i> Disciplinas
+                </a>                
+                <a href="#" class="list-group-item list-group-item-action">
+                    <i class="fas fa-file-invoice me-2"></i> Documentos
+                </a>
+                <a href="#" class="list-group-item list-group-item-action">
+                    <i class="fas fa-chart-line me-2"></i> Desempenho
+                </a>
+                <a href="index.html" class="list-group-item list-group-item-action" id="alterarSenhaLink">
+                    <i class="fas fa-key me-2"></i> Alterar Senha
+                </a>                
+                <a href="#" class="list-group-item list-group-item-action" id="sair">
+                    <i class="fas fa-sign-out-alt me-2"></i> Sair
+                </a>
+            </div>
+        </nav>
+
+        <!-- Conteúdo Principal -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 main-content">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="mb-0">Bem-vindo de volta, <span class="text-primary" id="name">Estudante</span></h4>
+            </div>
+
+            <!-- Cards Resumo -->
+            <div class="row g-4 mb-4">
+                <small id="processo">3324</small>
+                <div class="col-md-6 col-lg-3">
+                    <div class="info-card">
+                        <h5>Curso</h5>
+                        <h2 id="curso" class="text-primary loading">Carregando...</h2>
+                        <small>Técnico em Informática</small>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="info-card">
+                        <h5>Classe</h5>
+                        <h4 id="classe" class="text-success loading">Carregando...</h4>
+                        <small>12ª Classe</small>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="info-card">
+                        <h5>Turma</h5>
+                        <h2 id="turma" class="text-danger loading">Carregando...</h2>
+                        <small>Sala 208</small>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="info-card">
+                        <h5>Turno</h5>
+                        <h4 id="turno" class="text-warning loading">Carregando...</h4>
+                        <small>Manhã (07:30 - 11:45)</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção de Horários -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-white border-0 py-3">
+                    <h5 class="mb-0 d-flex align-items-center">
+                        <i class="fas fa-calendar-alt text-primary me-2"></i>
+                        Horário Semanal
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-bordered align-middle text-center mb-0">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th style="width: 15%;">Hora</th>
+                                    <th>Segunda</th>
+                                    <th>Terça</th>
+                                    <th>Quarta</th>
+                                    <th>Quinta</th>
+                                    <th>Sexta</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabela-horarios">
+                                <!-- Linhas geradas por JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seção de Avisos -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0 py-3">
+                    <h5 class="mb-0 d-flex align-items-center">
+                        <i class="fas fa-bullhorn text-warning me-2"></i>
+                        Avisos Recentes
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <strong>Reunião de Pais:</strong> Dia 15/10 às 18h na sala 105.
+                    </div>
+                    <div class="alert alert-warning">
+                        <strong>Prova de Matemática:</strong> Será realizada na próxima quarta-feira.
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Modal de Disciplinas -->
+<div class="modal fade" id="modalDisciplinas" tabindex="-1" aria-labelledby="modalDisciplinasLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title d-flex align-items-center">
+            <i class="fas fa-book-open me-2"></i>
+            <span>Disciplinas Matriculadas</span>
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group list-group-flush" id="lista-disciplinas">
+  <!-- Conteúdo gerado via JavaScript -->
+</ul>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Modal de Alteração de Senha -->
+<div class="modal fade" id="modalAlterarSenha" tabindex="-1" aria-labelledby="modalAlterarSenhaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="modalAlterarSenhaLabel">
+                    <i class="fas fa-key me-2"></i> Alterar Senha
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="alterarSenhaForm">
+                    <div class="mb-3">
+                        <label for="senhaAtual" class="form-label">Senha Atual</label>
+                        <input type="password" class="form-control" id="senhaAtual" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="novaSenha" class="form-label">Nova Senha</label>
+                        <input type="password" class="form-control" id="novaSenha" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmarSenha" class="form-label">Confirmar Nova Senha</label>
+                        <input type="password" class="form-control" id="confirmarSenha" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Alterar Senha</button>
+                </form>
+                <div id="erroMensagem" class="alert alert-danger mt-3 d-none" role="alert">
+                    As senhas não coincidem ou houve um erro ao alterar.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
+<script>
+    const horarios = [
+        { hora: "07:30 - 08:15", segunda: "Matemática", terca: "Física", quarta: "Português", quinta: "História", sexta: "Química" },
+        { hora: "08:20 - 09:05", segunda: "Biologia", terca: "Inglês", quarta: "Física", quinta: "Português", sexta: "Matemática" },
+        { hora: "09:10 - 09:55", segunda: "Química", terca: "História", quarta: "Educação Física", quinta: "Matemática", sexta: "Geografia" },
+        { hora: "10:10 - 10:55", segunda: "Geografia", terca: "Biologia", quarta: "História", quinta: "Inglês", sexta: "Português" },
+        { hora: "11:00 - 11:45", segunda: "Filosofia", terca: "Educação Moral", quarta: "Informática", quinta: "Química", sexta: "Física" }
+    ];
+
+    // Função para gerar a tabela
+    function preencherTabelaHorarios() {
+        const tabela = document.getElementById("tabela-horarios");
+        tabela.innerHTML = ""; // Limpa a tabela antes de preencher
+        
+        horarios.forEach(horario => {
+            const linha = document.createElement("tr");
+            linha.innerHTML = `
+                <td><strong>${horario.hora}</strong></td>
+                <td>${horario.segunda}</td>
+                <td>${horario.terca}</td>
+                <td>${horario.quarta}</td>
+                <td>${horario.quinta}</td>
+                <td>${horario.sexta}</td>
+            `;
+            tabela.appendChild(linha);
+        });
+    }
+
+    // Função para abrir modal de disciplinas
+    function abrirModalDisciplinas() {
+        const modal = new bootstrap.Modal(document.getElementById('modalDisciplinas'));
+        modal.show();
+    }
+
+        preencherTabelaHorarios();
+        
+</script>
+<script src="user.js"></script>
+
+</body>
+</html>
