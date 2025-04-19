@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comércio - IMEL</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../ccs.css">
+    <style>
+        .course-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            margin-bottom: 50px;
+        }
+        
+        .module-card {
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+            height: 100%;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .teacher-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            transition: all 0.3s;
+        }
+        
+        .teacher-card:hover {
+            background-color: #e9ecef;
+        }
+        
+        .teacher-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 15px;
+            border: 3px solid #0d6efd;
+        }
+        
+        .stats-card {
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .stats-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .competence-item {
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #0d6efd;
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="index.html"><strong>InforIMEL</strong></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item ms-2"><a class="btn btn-imel" onclick="window.history.back()">Voltar</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Course Header -->
+<div class="course-header">
+    <div class="container text-center">
+        <h1 class="display-4 mb-3">Comércio</h1>
+        <p class="lead">Curso Técnico</p>
+    </div>
+</div>
+
+<!-- Course Overview -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <h2 class="mb-4">Sobre o Curso</h2>
+                <p class="lead">No final do curso, o técnico médio de Comércio estará apto a:</p>
+                
+                <div class="mb-4">
+                    <div class="competence-item">
+                        <strong>1.</strong> Identificar as estratégias de marketing que podem ser adoptados no mercado;
+                    </div>
+                    <div class="competence-item">
+                        <strong>2.</strong> Organizar e planear a actividade comercial;
+                    </div>
+                    <div class="competence-item">
+                        <strong>3.</strong> Utilizar a informática como ferramenta fundamental para a organização do trabalho, com recurso a diversos softwares;
+                    </div>
+                    <div class="competence-item">
+                        <strong>4.</strong> Aplicar as novas tecnologias às funções Comercial e de Gestão;
+                    </div>
+                    <div class="competence-item">
+                        <strong>5.</strong> Conhecer a legislação comercial e proceder a estudos de mercado;
+                    </div>
+                    <div class="competence-item">
+                        <strong>6.</strong> Ampliar técnicas de atendimento ao público e prestação de serviços;
+                    </div>
+                    <div class="competence-item">
+                        <strong>7.</strong> Praticar princípios e técnicas de merchandising;
+                    </div>
+                    <div class="competence-item">
+                        <strong>8.</strong> Identificar conhecimentos básicos em administração e gestão de empresas;
+                    </div>
+                    <div class="competence-item">
+                        <strong>9.</strong> Realizar pesquisas de mercado.
+                    </div>
+                </div>
+                
+                <p>Este curso forma profissionais capacitados para atuar no dinâmico mundo do comércio, combinando conhecimentos de gestão, marketing e atendimento ao cliente com ferramentas tecnológicas modernas.</p>
+                
+                <div class="row mt-5">
+                    <div class="col-md-4 mb-4">
+                        <div class="stats-card bg-primary">
+                            <i class="fas fa-calendar-alt stats-icon"></i>
+                            <h3>3 Anos</h3>
+                            <p>Duração do Curso</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="stats-card bg-success">
+                            <i class="fas fa-book stats-icon"></i>
+                            <h3>18 Módulos</h3>
+                            <p>Disciplinas Integradas</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="mt-5 mb-4">Saídas Profissionais</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3"></i>
+                                Técnico Comercial
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3"></i>
+                                Gestor de Vendas
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3"></i>
+                                Consultor de Marketing
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3"></i>
+                                Supervisor de Loja
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3"></i>
+                                Analista de Mercado
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3"></i>
+                                Representante Comercial
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Informações Rápidas</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-clock me-2"></i> Turnos</span>
+                                <span>Manhã | Tarde</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-graduation-cap me-2"></i> Nível</span>
+                                <span>Técnico Médio</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card shadow-sm mt-4">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0">Coordenador do Curso</h4>
+                    </div>
+                    <div class="card-body text-center">
+                        <img src="https://randomuser.me/api/portraits/men/55.jpg" alt="Coordenador" class="teacher-img mb-3">
+                        <h5>Dr. António Ribeiro</h5>
+                        <p class="text-muted">Mestre em Gestão Comercial</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
