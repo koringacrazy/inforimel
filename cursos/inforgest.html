@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informática de Gestão - IMEL</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../ccs.css">
+    <style>
+        .course-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            margin-bottom: 50px;
+        }
+        
+        .module-card {
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+            height: 100%;
+        }
+        
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .teacher-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            transition: all 0.3s;
+        }
+        
+        .teacher-card:hover {
+            background-color: #e9ecef;
+        }
+        
+        .teacher-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 15px;
+            border: 3px solid #0d6efd;
+        }
+        
+        .stats-card {
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .stats-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="../index.html"><strong>InforIMEL</strong></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item ms-2"><a class="btn btn-imel" onclick="window.history.back()">Voltar</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Course Header -->
+<div class="course-header">
+    <div class="container text-center">
+        <h1 class="display-4 mb-3">Informática de Gestão</h1>
+        <p class="lead">Curso Técnico</p>
+    </div>
+</div>
+
+<!-- Course Overview -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <h2 class="mb-4">Sobre o Curso</h2>
+                <p class="lead">No final do curso, o técnico médio de Informática de Gestão estará apto a:</p>
+                <ul>
+                    <li>Montar e manter sistemas informáticos;</li>
+                    <li>Programar e gerir aplicações informáticas;</li>
+                    <li>Instalar e utilizar aplicações informáticas;</li>
+                    <li>Elaborar documentação sobre software desenvolvido;</li>
+                    <li>Programar em diferentes linguagens;</li>
+                    <li>Desenvolver aplicações integráveis na Internt;</li>
+                    <li>Operar sistemas de computadores em rede.</li>
+                </ul>
+                <p>Este curso combina conhecimentos de informática com princípios de gestão, formando profissionais capazes de desenvolver soluções tecnológicas que otimizem processos empresariais. Os estudantes adquirem competências em programação, bases de dados, redes de computadores, contabilidade e gestão empresarial.</p>
+                
+                <div class="row mt-5">
+                    <div class="col-md-4 mb-4">
+                        <div class="stats-card bg-primary">
+                            <i class="fas fa-calendar-alt stats-icon"></i>
+                            <h3>4 Anos</h3>
+                            <p>Duração do Curso</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="stats-card bg-success">
+                            <i class="fas fa-book stats-icon"></i>
+                            <h3>24 Módulos</h3>
+                            <p>Disciplinas Integradas</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="mt-5 mb-4">Saídas Profissionais</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3"></i>
+                                Técnico de Informática de Gestão
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3"></i>
+                                Programador de Aplicações Empresariais
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3"></i>
+                                Administrador de Bases de Dados
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3"></i>
+                                Técnico de Sistemas de Informação
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3"></i>
+                                Consultor de TI para PMEs
+                            </li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3"></i>
+                                Analista de Sistemas
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Informações Rápidas</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-clock me-2"></i> Turnos</span>
+                                <span>Manhã | Tarde | Noite</span>
+                            </li>
+
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-graduation-cap me-2"></i> Nível</span>
+                                <span>Técnico Médio</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card shadow-sm mt-4">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0">Coordenador do Curso</h4>
+                    </div>
+                    <div class="card-body text-center">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Coordenador" class="teacher-img mb-3">
+                        <h5>Abraam Irineu</h5>
+                        <p class="text-muted">Mestre em Sistemas de Informação</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
