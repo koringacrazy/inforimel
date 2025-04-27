@@ -253,8 +253,8 @@
           <!-- Sidebar aqui dentro -->
           <nav class="sidebar">
               <div class="list-group list-group-flush">
-                  <a href="#" class="list-group-item list-group-item-action active">
-                      <i class="fas fa-home me-2"></i> Dashboard
+                  <a href="index.html" class="list-group-item list-group-item-action active">
+                      <i class="fas fa-home me-2"></i> Home
                   </a>
                   <a href="call.html" class="list-group-item list-group-item-action">
                       <i class="fas fa-calendar-alt me-2"></i> Calendário & Horários
@@ -263,17 +263,14 @@
                       <i class="fas fa-book-open me-2"></i> Disciplinas
                   </a>                
                   <a href="#" class="list-group-item list-group-item-action">
-                      <i class="fas fa-file-invoice me-2"></i> Documentos
-                  </a>
-                  <a href="#" class="list-group-item list-group-item-action">
                       <i class="fas fa-chart-line me-2"></i> Desempenho
                   </a>
-                  <a href="alterar.html" class="list-group-item list-group-item-action">
+                <a href="index.html" class="list-group-item list-group-item-action" id="alterarSenhaLink">
                     <i class="fas fa-key me-2"></i> Alterar Senha
+                </a>                
+                <a href="#" class="list-group-item list-group-item-action" id="sair">
+                    <i class="fas fa-sign-out-alt me-2"></i> Terminar Sessão
                 </a>
-                  <a href="#" class="list-group-item list-group-item-action" id="sair">
-                      <i class="fas fa-sign-out-alt me-2"></i> Sair
-                  </a>
               </div>
           </nav>
         </div>
@@ -296,16 +293,13 @@
                     <i class="fas fa-book-open me-2"></i> Disciplinas
                 </a>                
                 <a href="#" class="list-group-item list-group-item-action">
-                    <i class="fas fa-file-invoice me-2"></i> Documentos
-                </a>
-                <a href="#" class="list-group-item list-group-item-action">
                     <i class="fas fa-chart-line me-2"></i> Desempenho
                 </a>
                 <a href="index.html" class="list-group-item list-group-item-action" id="alterarSenhaLink">
                     <i class="fas fa-key me-2"></i> Alterar Senha
                 </a>                
                 <a href="#" class="list-group-item list-group-item-action" id="sair">
-                    <i class="fas fa-sign-out-alt me-2"></i> Sair
+                    <i class="fas fa-sign-out-alt me-2"></i> Terminar Sessão
                 </a>
             </div>
         </nav>
@@ -391,10 +385,10 @@
                 </div>
                 <div class="card-body">
                     <div class="alert alert-info">
-                        <strong>Reunião de Pais:</strong> Dia 15/10 às 18h na sala 105.
+                        
                     </div>
                     <div class="alert alert-warning">
-                        <strong>Prova de Matemática:</strong> Será realizada na próxima quarta-feira.
+                        
                     </div>
                 </div>
             </div>
@@ -409,13 +403,26 @@
         <div class="modal-header bg-primary text-white">
           <h5 class="modal-title d-flex align-items-center">
             <i class="fas fa-book-open me-2"></i>
-            <span>Disciplinas Matriculadas</span>
+            <span>Disciplinas</span>
           </h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <ul class="list-group list-group-flush" id="lista-disciplinas">
   <!-- Conteúdo gerado via JavaScript -->
+</ul>
+            <div class="modal fade" id="modalDisciplinas" tabindex="-1" aria-labelledby="modalDisciplinasLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title d-flex align-items-center">
+            <span>Notas</span>
+          </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="list-group list-group-flush" id="lista-disciplinas">
+  <span>Notas não disponivies</span>
 </ul>
 
         </div>
@@ -468,11 +475,11 @@
 
 <script>
     const horarios = [
-        { hora: "07:30 - 08:15", segunda: "Matemática", terca: "Física", quarta: "Português", quinta: "História", sexta: "Química" },
-        { hora: "08:20 - 09:05", segunda: "Biologia", terca: "Inglês", quarta: "Física", quinta: "Português", sexta: "Matemática" },
-        { hora: "09:10 - 09:55", segunda: "Química", terca: "História", quarta: "Educação Física", quinta: "Matemática", sexta: "Geografia" },
-        { hora: "10:10 - 10:55", segunda: "Geografia", terca: "Biologia", quarta: "História", quinta: "Inglês", sexta: "Português" },
-        { hora: "11:00 - 11:45", segunda: "Filosofia", terca: "Educação Moral", quarta: "Informática", quinta: "Química", sexta: "Física" }
+        { hora: "07:30 - 08:15", segunda: "Matemática", terca: "IMEI", quarta: "L. Português", quinta: "História", sexta: "IMEI" },
+        { hora: "08:20 - 09:05", segunda: "OAE", terca: "Inglês", quarta: "Física", quinta: "L. Português", sexta: "Matemática" },
+        { hora: "09:10 - 09:55", segunda: "TIC", terca: "OAE", quarta: "Educação Física", quinta: "Matemática", sexta: "IMEI" },
+        { hora: "10:10 - 10:55", segunda: "TLP", terca: "IMEI", quarta: "IMEI", quinta: "Inglês", sexta: "L. Português" },
+        { hora: "11:00 - 11:45", segunda: "SINFOR", terca: "SINFOR", quarta: "PT", quinta: "PT", sexta: "TLP" }
     ];
 
     // Função para gerar a tabela
