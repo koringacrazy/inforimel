@@ -172,44 +172,65 @@
           </div>
         </div>
 
-        <!-- Formulário de Contato -->
-        <div class="col-lg-7 mr-auto order-1" data-aos="fade-up" data-aos-delay="200">
-          <form id="contact-form">
-            <div class="row">
-              <div class="col-6 mb-3">
-                <input type="text" class="form-control" id="name" placeholder="Seu Nome">
-              </div>
-              <div class="col-6 mb-3">
-                <input type="email" class="form-control" id="email" placeholder="Email">
-              </div>
-              <div class="col-12 mb-3">
-                <input type="text" class="form-control" id="subject" placeholder="Assunto">
-              </div>
-              <div class="col-12 mb-3">
-                <textarea name="" id="message" cols="30" rows="7" class="form-control" placeholder="Mensagem"></textarea>
-              </div>
-              <div class="col-12">
-                <input type="submit" value="Enviar" class="btn btn-primary">
-              </div>
+       <div class="col-lg-8 order-1" data-aos="fade-up" data-aos-delay="200">
+          <div class="contact-form">
+            <h2 class="mb-4">Envie-nos uma mensagem</h2>
+            
+            <!-- Mensagens de status -->
+            <div id="success-alert" class="alert alert-success" role="alert">
+              Sua mensagem foi enviada com sucesso! Entraremos em contacto em breve.
             </div>
-          </form>
+            
+            <div id="error-alert" class="alert alert-danger" role="alert">
+              Ocorreu um erro ao enviar a mensagem. Por favor, tente novamente mais tarde.
+            </div>
+            
+            <form id="contact-form" method="POST">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Seu Nome" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                </div>
+                <div class="col-12 mb-3">
+                  <input type="text" class="form-control" id="subject" name="subject" placeholder="Assunto" required>
+                </div>
+                <div class="col-12 mb-4">
+                  <textarea name="message" id="message" cols="30" rows="7" class="form-control" placeholder="Mensagem" required></textarea>
+                </div>
+
+                <!-- Proteção contra spam -->
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_honey" style="display:none">
+                
+                <!-- Redirecionamento após envio -->
+                <input type="hidden" name="_next" value="https://example.com/obrigado.html">
+                
+                <!-- Email de destino -->
+                <input type="hidden" name="_to" value="pacavirabusiness@gmail.com">
+
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Rodapé -->
   <div class="site-footer">
     <div class="container">
       <div class="row mt-5">
         <div class="col-12 text-center">
-          <p class="copyright">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. Todos os Direitos Reservados. &mdash; Instituto Médio de Economia de Luanda- <a href="index.html">IMEL</a></p>
+          <p class="copyright">Copyright &copy;<script>document.write(new Date().getFullYear());</script>. Todos os Direitos Reservados. &mdash; Instituto Médio de Economia de Luanda- <a href="index.html">IMEL</a>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Sobreposição e Loader -->
   <div id="overlayer"></div>
   <div class="loader">
     <div class="spinner-border" role="status">
@@ -217,40 +238,7 @@
     </div>
   </div>
 
-  <!-- EmailJS Script -->
-  <script>
-    (function () {
-      emailjs.init("_DusukqgZTYYY7HzL"); // Substitua com sua chave de usuário do EmailJS
-    })();
-
-    document.getElementById("contact-form").addEventListener("submit", function (event) {
-      event.preventDefault(); // Impede o envio padrão do formulário
-
-      var name = document.getElementById("name").value;
-      var email = document.getElementById("email").value;
-      var subject = document.getElementById("subject").value;
-      var message = document.getElementById("message").value;
-
-      var templateParams = {
-        from_name: name,
-        from_email: email,
-        subject: subject,
-        message: message
-      };
-
-      emailjs.send("service_2muqfwc", "template_r7ccw75", templateParams)
-        .then(function (response) {
-          console.log("Mensagem enviada com sucesso!", response);
-          alert("Sua mensagem foi enviada com sucesso!");
-          alert("Vai receber a resposta pelo seu email!");
-        }, function (error) {
-          console.error("Erro ao enviar a mensagem", error);
-          alert("Ocorreu um erro ao enviar a mensagem. Tente novamente.");
-        });
-    });
-  </script>
-
-  <!-- Scripts -->
+  <!-- Scripts JavaScript -->
   <script src="js/jquery-3.4.1.min.js"></script>
   <script src="js/popper.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
@@ -261,8 +249,45 @@
   <script src="js/jquery.sticky.js"></script>
   <script src="js/aos.js"></script>
   <script src="js/custom.js"></script>
-  <script src="script.js"></script>
-
+  
+  <!-- Script para envio do formulário -->
+  <script>
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Esconder mensagens anteriores
+      document.getElementById('success-alert').style.display = 'none';
+      document.getElementById('error-alert').style.display = 'none';
+      
+      // Coletar dados do formulário
+      const formData = new FormData(this);
+      
+      // Enviar via FormSubmit
+      fetch('https://formsubmit.co/ajax/pacavirabusiness@gmail.com', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if(data.success === "true") {
+          // Mostrar mensagem de sucesso
+          document.getElementById('success-alert').style.display = 'block';
+          // Limpar formulário
+          document.getElementById('contact-form').reset();
+          // Rolar para a mensagem de sucesso
+          document.getElementById('success-alert').scrollIntoView({ behavior: 'smooth' });
+        } else {
+          throw new Error('Erro no envio');
+        }
+      })
+      .catch(error => {
+        // Mostrar mensagem de erro
+        document.getElementById('error-alert').style.display = 'block';
+        // Rolar para a mensagem de erro
+        document.getElementById('error-alert').scrollIntoView({ behavior: 'smooth' });
+        console.error('Error:', error);
+      });
+    });
+  </script>
 </body>
-
 </html>
