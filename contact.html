@@ -164,25 +164,18 @@
 
           </div>
         </div>
-        <div class="col-lg-7 mr-auto order-1" data-aos="fade-up" data-aos-delay="200">
-          <form id="contact-form">
-            <div class="row">
-              <div class="col-6 mb-3">
-                <input type="text" class="form-control" id="name" placeholder="Seu Nome">
-              </div>
-              <div class="col-6 mb-3">
-                <input type="email" class="form-control" id="email" placeholder="Email">
-              </div>
-              <div class="col-12 mb-3">
-                <input type="text" class="form-control" id="subject" placeholder="Assunto">
-              </div>
-              <div class="col-12 mb-3">
-                <textarea name="" id="message" cols="30" rows="7" class="form-control" placeholder="Mensagem"></textarea>
-              </div>
-              <div class="col-12">
-                <input type="submit" value="Enviar" class="btn btn-primary">
-              </div>
-            </div>
+  <form action="https://formsubmit.co/pacavirabusiness@gmail.com" method="POST">
+  <input type="text" name="name" placeholder="Seu Nome" required>
+  <input type="email" name="email" placeholder="Email" required>
+  <input type="text" name="subject" placeholder="Assunto" required>
+  <textarea name="message" placeholder="Mensagem" required></textarea>
+  
+  <!-- Anti-spam -->
+  <input type="text" name="_honey" style="display:none">
+  <input type="hidden" name="_captcha" value="false">
+  
+  <input type="submit" value="Enviar" class="btn btn-primary">
+</form>
           </form>
           
         </div>
