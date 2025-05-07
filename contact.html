@@ -165,25 +165,32 @@
           </div>
         </div>
   <form action="https://formsubmit.co/pacavirabusiness@gmail.com" method="POST">
-  <input type="text" name="name" placeholder="Seu Nome" required>
-  <input type="email" name="email" placeholder="Email" required>
-  <input type="text" name="subject" placeholder="Assunto" required>
-  <textarea name="message" placeholder="Mensagem" required></textarea>
-  
-  <!-- Anti-spam -->
-  <input type="text" name="_honey" style="display:none">
-  <input type="hidden" name="_captcha" value="false">
-  
-  <input type="submit" value="Enviar" class="btn btn-primary">
-</form>
-          </form>
-          
-        </div>
-      </div>
-
-      
+  <div class="row">
+    <div class="col-6 mb-3">
+      <input type="text" class="form-control" name="name" placeholder="Seu Nome" required>
     </div>
-  </div> <!-- /.untree_co-section -->
+    <div class="col-6 mb-3">
+      <input type="email" class="form-control" name="email" placeholder="Email" required>
+    </div>
+    <div class="col-12 mb-3">
+      <input type="text" class="form-control" name="subject" placeholder="Assunto" required>
+    </div>
+    <div class="col-12 mb-3">
+      <textarea name="message" cols="30" rows="7" class="form-control" placeholder="Mensagem" required></textarea>
+    </div>
+
+    <!-- Proteção contra spam -->
+    <input type="hidden" name="_captcha" value="false">
+    <input type="text" name="_honey" style="display:none">
+
+    <!-- Redirecionamento opcional após envio -->
+    <input type="hidden" name="_next" value="https://seudominio.com/obrigado.html">
+
+    <div class="col-12">
+      <input type="submit" value="Enviar" class="btn btn-primary">
+    </div>
+  </div>
+</form>
 
   <div class="site-footer">
     <div class="container">
